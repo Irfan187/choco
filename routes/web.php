@@ -46,7 +46,7 @@ Route::get('/', function () {
     Route::resource('unit', UnitController::class);
     Route::get('unit/status/{id}', [UnitController::class, 'status'])->name('unit.status');
     Route::get('supplier/status/{id}', [SupplierController::class, 'status'])->name('supplier.status');
-    Route::get('manufacturing_partner/status/{id}', [SupplierController::class, 'status'])->name('manufacturing_partner.status');
+    Route::get('manufacturing_partner/status/{id}', [ManufacturingPartnerController::class, 'status'])->name('manufacturing_partner.status');
     Route::get('customer/status/{id}', [CustomerController::class, 'status'])->name('customer.status');
 
 
