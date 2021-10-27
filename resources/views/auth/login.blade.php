@@ -3,8 +3,9 @@
         <x-slot name="logo">
             <a href="/">
                 <!--<x-application-logo class="w-20 h-20 fill-current text-gray-500" />-->
-            <h2 style="font-size:25px; font-style:bold;"> <b>   Supplier Franchise Management</b> </h2>
-            </a>
+            <!-- <h2 style="font-size:25px; font-style:bold;"> <b>   Supplier Franchise Management</b> </h2> -->
+            <img src="{{ asset('/images/logo1.png') }}" alt="">
+        </a>
             
         </x-slot>
 
