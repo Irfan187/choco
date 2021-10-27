@@ -162,6 +162,7 @@ class ComposerStaticInitd2e1bee2fc6896af7318c58c6439e031
         array (
             'Fruitcake\\Cors\\' => 15,
             'Firebase\\JWT\\' => 13,
+            'Fideloper\\Proxy\\' => 16,
             'Faker\\' => 6,
             'Facade\\Ignition\\' => 16,
             'Facade\\IgnitionContracts\\' => 25,
@@ -512,6 +513,10 @@ class ComposerStaticInitd2e1bee2fc6896af7318c58c6439e031
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
+        'Fideloper\\Proxy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fideloper/proxy/src',
+        ),
         'Faker\\' => 
         array (
             0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
@@ -621,7 +626,7 @@ class ComposerStaticInitd2e1bee2fc6896af7318c58c6439e031
         'App\\Http\\Controllers\\Catalog\\ManufacturingPartnerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalog/ManufacturingPartnerController.php',
         'App\\Http\\Controllers\\Catalog\\OrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalog/OrderController.php',
         'App\\Http\\Controllers\\Catalog\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalog/ProductController.php',
-        'App\\Http\\Controllers\\Catalog\\Supplier' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalog/Supplier.php',
+        'App\\Http\\Controllers\\Catalog\\SupplierController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalog/SupplierController.php',
         'App\\Http\\Controllers\\Catalog\\UnitController' => __DIR__ . '/../..' . '/app/Http/Controllers/Catalog/UnitController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
@@ -1452,6 +1457,7 @@ class ComposerStaticInitd2e1bee2fc6896af7318c58c6439e031
         'Faker\\Provider\\nl_BE\\Payment' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/Payment.php',
         'Faker\\Provider\\nl_BE\\Person' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/Person.php',
         'Faker\\Provider\\nl_BE\\PhoneNumber' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/PhoneNumber.php',
+        'Faker\\Provider\\nl_BE\\Text' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_BE/Text.php',
         'Faker\\Provider\\nl_NL\\Address' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_NL/Address.php',
         'Faker\\Provider\\nl_NL\\Color' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_NL/Color.php',
         'Faker\\Provider\\nl_NL\\Company' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/nl_NL/Company.php',
@@ -1573,6 +1579,8 @@ class ComposerStaticInitd2e1bee2fc6896af7318c58c6439e031
         'Faker\\Provider\\zh_TW\\Text' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Provider/zh_TW/Text.php',
         'Faker\\UniqueGenerator' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/UniqueGenerator.php',
         'Faker\\ValidGenerator' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/ValidGenerator.php',
+        'Fideloper\\Proxy\\TrustProxies' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustProxies.php',
+        'Fideloper\\Proxy\\TrustedProxyServiceProvider' => __DIR__ . '/..' . '/fideloper/proxy/src/TrustedProxyServiceProvider.php',
         'Firebase\\JWT\\BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/BeforeValidException.php',
         'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
         'Firebase\\JWT\\JWK' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWK.php',
