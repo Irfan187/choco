@@ -38,13 +38,13 @@
                     <td>{{ $manufacturing_partner->first_name }}</td>
                     <td>{{ $manufacturing_partner->last_name }}</td>
                     <td>{{ $manufacturing_partner->email }}</td>
-                    <?php
+                     <?php
                     $products=App\Models\Product::where('manufacturing_partner_id', $manufacturing_partner->id)->pluck('name');
                     $all_products=$products->implode(', ');
                    ?>
                     <td class="col-sm-2">
                    {{$all_products}}
-                    </td>
+                    </td> 
 
                     <td>
                      <a href="{{ route('manufacturing_partner.status',$manufacturing_partner->id) }}"><span

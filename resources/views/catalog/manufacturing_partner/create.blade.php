@@ -19,32 +19,32 @@
                     @endisset
                     <div class="form-group">
                         <label class="form-label" for="first_name">First Name</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name"
+                        <input type="text" class="form-control" name="first_name" id="first_name" required
                             value="{{ isset($manufacturing_partner)?$manufacturing_partner->first_name:''}}" placeholder=" Enter first name">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="last_name">Last Name</label>
-                        <input type="text" class="form-control" name="last_name" id="last_name"
+                        <input type="text" class="form-control" name="last_name" id="last_name" required
                             value="{{ isset($manufacturing_partner)?$manufacturing_partner->last_name:''}}" placeholder=" Enter last name">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="email">Email</label>
-                        <input type="text" class="form-control" name="email" id="email"
+                        <input type="email" class="form-control" name="email" id="email" required
                             value="{{ isset($manufacturing_partner)?$manufacturing_partner->email:''}}" placeholder=" Enter email">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="mobilenumber">Mobile Number</label>
-                        <input type="text" class="form-control" name="mobilenumber" id="mobilenumber"
+                        <input type="text" class="form-control" name="mobilenumber" id="mobilenumber" required
                             value="{{ isset($manufacturing_partner)?$manufacturing_partner->mobilenumber:''}}" placeholder=" Enter mobile number">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="address">Address</label>
-                        <input type="text" class="form-control" name="address" id="address"
+                        <input type="text" class="form-control" name="address" id="address" required
                             value="{{ isset($manufacturing_partner)?$manufacturing_partner->address:''}}" placeholder=" Enter address">
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="company">Address</label>
-                        <input type="text" class="form-control" name="company" id="company"
+                        <label class="form-label" for="company">Company</label>
+                        <input type="text" class="form-control" name="company" id="company" required
                             value="{{ isset($manufacturing_partner)?$manufacturing_partner->company:''}}" placeholder=" Enter company">
                     </div>
 

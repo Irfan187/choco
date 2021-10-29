@@ -19,41 +19,41 @@
                     @endisset
                     <div class="form-group">
                         <label class="form-label" for="first_name">First Name</label>
-                        <input type="text" class="form-control" name="first_name" id="first_name"
+                        <input type="text" class="form-control" name="first_name" id="first_name" required
                             value="{{ isset($customer)?$customer->first_name:''}}" placeholder=" Enter first name">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="last_name">Last Name</label>
-                        <input type="text" class="form-control" name="last_name" id="last_name"
+                        <input type="text" class="form-control" name="last_name" id="last_name" required
                             value="{{ isset($customer)?$customer->last_name:''}}" placeholder=" Enter last name">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="email">Email</label>
-                        <input type="text" class="form-control" name="email" id="email"
+                        <input type="email" class="form-control" name="email" id="email" required
                             value="{{ isset($customer)?$customer->email:''}}" placeholder=" Enter email">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="password">Password</label>
-                        <input type="password" class="form-control" name="password" id="password"
+                        <input type="password" class="form-control" name="password" id="password" required
                             value="{{ isset($customer)?$customer->password:''}}" placeholder=" Enter password">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="franchise_name">Franchise Name</label>
-                        <input type="text" class="form-control" name="franchise_name" id="franchise_name"
+                        <input type="text" class="form-control" name="franchise_name" id="franchise_name" required
                             value="{{ isset($customer)?$customer->franchise_name:''}}" placeholder=" Enter Franchise name">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="mobilenumber">Mobile Number</label>
-                        <input type="text" class="form-control" name="mobilenumber" id="mobilenumber"
+                        <input type="text" class="form-control" name="mobilenumber" id="mobilenumber" required
                             value="{{ isset($customer)?$customer->mobilenumber:''}}" placeholder=" Enter mobile number">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="address">Address</label>
-                        <input type="text" class="form-control" name="address" id="address"
+                        <input type="text" class="form-control" name="address" id="address" required
                             value="{{ isset($customer)?$customer->address:''}}" placeholder=" Enter address">
                     </div>
 
-                 
+                 <input type="hidden" name="user_type" value="Customer">
 
 
                     <div class="form-group mb-0">

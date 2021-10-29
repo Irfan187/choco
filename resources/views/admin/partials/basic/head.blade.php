@@ -29,3 +29,5 @@
 
 <!-- Color Skin css -->
 <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{asset('admin/assets/color-skins/color7.css')}}" />
+
+

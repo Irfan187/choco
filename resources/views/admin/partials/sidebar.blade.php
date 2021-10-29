@@ -18,7 +18,7 @@
                 <!--<a href="#"  class="profile-img">-->
                 <!--    <span class="fa fa-pencil" aria-hidden="true"></span>-->
                 <!--</a>-->
-                
+
             </div>
             <div class="user-info">
                 <h2>{{ Auth::user()->name }}</h2>
@@ -35,15 +35,27 @@
                     class="side-menu__label">Catalog</span><i class="angle fa fa-angle-right"></i></a> --}}
     {{-- <ul class="slide-menu">--}}
     <ul class="p-5">
+        @role('Admin')
         <li><a class="slide-item" href="{{ route('product.index') }}">Product</a></li>
         <li><a class="slide-item" href="{{ route('category.index') }}">Category</a></li>
         <li><a class="slide-item" href="{{ route('unit.index') }}">Unit</a></li>
         <!-- <li><a class="slide-item" href="{{ route('inventory.index') }}">Inventory</a></li> -->
         <li><a class="slide-item" href="{{ route('customer.index') }}">Customer</a></li>
-        <li><a class="slide-item" href="{{ route('broadcast.index') }}">Broadcast Email</a></li>
-        <li><a class="slide-item" href="{{ route('broadcast_group.index') }}">Email Group</a></li>
+        <!-- <li><a class="slide-item" href="{{ route('broadcast.index') }}">Broadcast Email</a></li>
+        <li><a class="slide-item" href="{{ route('broadcast_group.index') }}">Email Group</a></li> -->
         <li><a class="slide-item" href="{{ route('manufacturing_partner.index') }}">Manufacturer</a></li>
         <li><a class="slide-item" href="{{ route('supplier.index') }}">Supplier</a></li>
+        @endrole
+
+        @role('Customer')
+        <li><a class="slide-item" href="/customer/suppliers">Suppliers</a></li>
+        <li><a class="slide-item" href="{{url('customer/cart_page')}}">Cart</a></li>
+        <li><a class="slide-item" href="{{url('customer/myorders')}}">Orders</a></li>
+        @endrole
+
+        @role('Supplier')
+        <li><a class="slide-item" href="/supplier/orders">Orders</a></li>
+        @endrole
 
 
 
@@ -53,6 +65,6 @@
     </ul> --}}
 
 
-    
+
 </aside>
 <!-- /Sidebar menu-->

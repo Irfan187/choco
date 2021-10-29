@@ -7,6 +7,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -17,6 +19,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
+
         return view('auth.login');
     }
 
@@ -31,8 +34,16 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
+        if(auth()->user()->hasRole('Customer'))
+        return redirect()->intended(RouteServiceProvider::CUSTOMER);
+        else if(auth()->user()->hasRole('Supplier'))
         return redirect()->intended(RouteServiceProvider::HOME);
+        else if(auth()->user()->hasRole('Manufacturer'))
+        return redirect()->intended(RouteServiceProvider::HOME);
+        else
+        return redirect()->intended(RouteServiceProvider::HOME);
+
+
     }
 
     /**

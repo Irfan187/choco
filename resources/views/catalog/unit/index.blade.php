@@ -1,5 +1,5 @@
-
-<!-- <div class="col-sm-4" style="margin-top:20px;"  >
+<!-- 
+<div class="col-sm-4" style="margin-top:20px;"  >
  <form action="{{url('unit/search')}}" method="POST" enctype="multipart/form-data">
  @csrf
         <input type="text" id="searchbar" placeholder="Search.." name="search">

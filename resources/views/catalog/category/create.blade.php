@@ -19,12 +19,12 @@
                     @endisset
                     <div class="form-group">
                         <label class="form-label" for="name">Category </label>
-                        <input type="text" class="form-control" name="name" id="name"
+                        <input type="text" class="form-control" name="name" id="name" required
                             value="{{ isset($category)?$category->name:''}}" placeholder=" Enter Name">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="name">Image</label>
-                        <input type="file" class="dropify" name="image"
+                        <input type="file" class="dropify" name="image" required
                             data-default-file="{{ isset($category)? asset('images/Category/'.$category->image):asset('admin/assets/images/media/media1.jpg')}}"
                             data-height="180" />
                     </div>

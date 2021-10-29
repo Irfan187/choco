@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Catalog;
 use Illuminate\Support\Facades\Http;
-
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\CrudRepository;
@@ -9,8 +9,9 @@ use App\Repositories\CrudRepository;
 class CustomerController extends Controller
 {
     protected $crud_repository;
-    protected $model = "Customer";
+    protected $model = "User";
     protected $view = 'customer';
+    protected $role = 'Customer';
     // index
     // edit
     /**
@@ -24,7 +25,8 @@ class CustomerController extends Controller
     }
     public function index()
     {
-        $customers = app('App\\Models\\' . $this->model)->all();
+       
+        $customers = app('App\\Models\\' . $this->model)::role('Customer')->get();
         $view = $this->view;
         return view('mycomponent.datatable', compact('customers', 'view'));
     }
@@ -57,8 +59,7 @@ class CustomerController extends Controller
             'mobilenumber' => 'required',
             'address' => 'required',
         ]);
-
-        $message = $this->crud_repository->storeWithOutImage($request, $this->model);     
+        $message = $this->crud_repository->registerNewUser($request, $this->model, $this->role);     
         return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }
 
@@ -126,6 +127,13 @@ class CustomerController extends Controller
           return view('mycomponent.datatable',compact('customers','view'));
         else 
         return view('mycomponent.datatable',compact('customers','view'));
+    }
+
+
+    public function getSupplier()
+    {
+        $suppliers=app('App\\Models\\' . $this->model)::role('Supplier')->get();
+        return view('customer.index',compact('suppliers'));
     }
   
 }

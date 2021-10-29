@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Catalog;
 use Exception;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\User;
 use App\Models\Inventory;
 use App\Models\Supplier;
 use App\Models\Unit;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Repositories\CrudRepository;
 use App\Models\ManufacturingPartner;
+use Spatie\Permission\Models\Role;
 
 class ProductController extends Controller
 {
@@ -30,7 +33,7 @@ class ProductController extends Controller
     }
     public function index()
     {
-       
+
         // $view = $this->view;
         // return view('mycomponent.datatable', compact('products', 'view'));
         $products = app('App\\Models\\' . $this->model)->all();
@@ -45,10 +48,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    { 
-        $suppliers=Supplier::where('isActive',1)->get();  
+    {
+        $suppliers=User::role('Supplier')->where('isActive',1)->get();
         $units=Unit::where('isActive',1)->get();
-        $manufacturers=ManufacturingPartner::where('isActive',1)->get();
+        $manufacturers=User::role('Manufacturer')->where('isActive',1)->get();
+
         $categories = Category::IsActive()->get();
         $view = $this->view;
         return view('catalog.'.$this->view.'.create', compact('view', 'categories','manufacturers','units','suppliers'));
@@ -66,7 +70,7 @@ class ProductController extends Controller
         $request->validate([
             'description' => 'required',
         ]);
-        
+
          $message = $this->crud_repository->storeWithSingleImage($request, $this->model);
          return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }
@@ -91,7 +95,7 @@ class ProductController extends Controller
     {
         $product = app('App\\Models\\' . $this->model)->find($id);
         $categories = Category::IsActive()->get();
-        $manufacturers=ManufacturingPartner::all();
+        $manufacturers=User::role('Manufacturer')->isActive()->get();
 
         $view = $this->view;
         return view('catalog.'.$this->view.'.create', compact('product', 'categories', 'manufacturers','view'));
@@ -156,12 +160,12 @@ class ProductController extends Controller
     {
         $view=$this->view;
         $q = $request->get ( 'search' );
-        $products = app('App\\Models\\' . $this->model)::where('name','LIKE','%'.$q.'%')->get();  
+        $products = app('App\\Models\\' . $this->model)::where('name','LIKE','%'.$q.'%')->get();
         $inventories = Inventory::with('product')->get();
         if(count($products) > 0)
           return view('mycomponent.datatable',compact('products','view','inventories'));
-        else 
+        else
         return view('mycomponent.datatable',compact('products','view','inventories'));
     }
-   
+
 }

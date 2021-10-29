@@ -8,7 +8,11 @@
     <div class="col-md-12 col-lg-12">
         <div class="card">
           
+             @if($view=='orders')
+            @include('supplier.'.$view)
+            @else
             @include('catalog.'.$view.'.index')
+            @endif
             
             <!-- table-wrapper -->
         </div>

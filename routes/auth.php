@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\AuthenticatedCustomerSessionController;
+use App\Http\Controllers\Auth\AuthenticatedSupplierSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
@@ -62,3 +64,38 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
+
+
+    //Customer
+
+// Route::get('login/customer', [AuthenticatedCustomerSessionController::class, 'create']);
+
+// Route::post('login/customer', [AuthenticatedCustomerSessionController::class, 'store']);
+
+// Route::get('logout/supplier', [AuthenticatedCustomerSessionController::class, 'destroy'])
+//                 ->middleware('Customer')
+//                 ->name('logout');
+
+
+// Route::get('login/supplier', [AuthenticatedSupplierSessionController::class, 'create']);
+
+// Route::post('login/supplier', [AuthenticatedSupplierSessionController::class, 'store']);
+
+// Route::get('logout/supplier', [AuthenticatedSupplierSessionController::class, 'destroy'])
+//                 ->middleware('Supplier')
+//                 ->name('logout');
+
+
+   //supplier
+
+//  Route::get('supplier/login', [SupplierAuthenticatedSessionController::class, 'create'])
+//                 ->middleware('guest')
+//                 ->name('login');
+
+// Route::post('supplier/login', [SupplierAuthenticatedSessionController::class, 'store'])
+//                 ->middleware('guest');
+
+
+// Route::get('supplier/logout', [SupplierAuthenticatedSessionController::class, 'destroy'])
+//                 ->middleware('auth')
+//                 ->name('logout');

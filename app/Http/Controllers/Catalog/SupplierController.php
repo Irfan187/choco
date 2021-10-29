@@ -9,7 +9,8 @@ use App\Repositories\CrudRepository;
 class SupplierController extends Controller
 {
     protected $crud_repository;
-    protected $model = "Supplier";
+    protected $model = "User";
+    protected $role = "Supplier";
     protected $view = 'supplier';
     // index
     // edit
@@ -24,7 +25,7 @@ class SupplierController extends Controller
     }
     public function index()
     {
-        $suppliers = app('App\\Models\\' . $this->model)->all();
+        $suppliers = app('App\\Models\\' . $this->model)::role('Supplier')->get();
         $view = $this->view;
         return view('mycomponent.datatable', compact('suppliers', 'view'));
     }
@@ -53,7 +54,8 @@ class SupplierController extends Controller
         //     'image' => 'required',
         // ]);
 
-        $message = $this->crud_repository->storeWithOutImage($request, $this->model);
+        $message = $this->crud_repository->registerNewUser($request, $this->model, $this->role);
+
         return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }
 
@@ -107,6 +109,7 @@ class SupplierController extends Controller
 
     public function status($id)
     {
+        // dd($id);
         $message = $this->crud_repository->status($id, $this->model);
         return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }

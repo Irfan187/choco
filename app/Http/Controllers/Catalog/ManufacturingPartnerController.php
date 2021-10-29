@@ -8,8 +8,10 @@ use App\Repositories\CrudRepository;
 class ManufacturingPartnerController extends Controller
 {
     protected $crud_repository;
-    protected $model = "ManufacturingPartner";
+    protected $model = "User";
     protected $view = 'manufacturing_partner';
+    protected $role = 'Manufacturer';
+
     // index
     // edit
     /**
@@ -23,7 +25,7 @@ class ManufacturingPartnerController extends Controller
     }
     public function index()
     {
-        $manufacturing_partners = app('App\\Models\\' . $this->model)->all();
+        $manufacturing_partners = app('App\\Models\\' . $this->model)::role('Manufacturer')->get();
         $view = $this->view;
         return view('mycomponent.datatable', compact('manufacturing_partners', 'view'));
     }
@@ -56,7 +58,7 @@ class ManufacturingPartnerController extends Controller
             'company'=>'required'
         ]);
 
-        $message = $this->crud_repository->storeWithOutImage($request, $this->model);
+        $message = $this->crud_repository->registerNewUser($request, $this->model, $this->role);
         return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }
 
@@ -110,6 +112,7 @@ class ManufacturingPartnerController extends Controller
 
     public function status($id)
     { 
+       
         $message = $this->crud_repository->status($id, $this->model);
         return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }

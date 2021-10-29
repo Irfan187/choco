@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label class="form-label" for="name">unit</label>
                         <input type="text" class="form-control" name="name" id="name"
-                            value="{{ isset($unit)?$unit->name:''}}" placeholder=" Enter Unit Name">
+                            value="{{ isset($unit)?$unit->name:''}}" placeholder=" Enter Unit Name" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="symbol">symbol</label>

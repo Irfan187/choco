@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Exception;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class CrudRepository
 {
@@ -34,10 +35,26 @@ class CrudRepository
         DB::beginTransaction();
         try {
             $this->model = app('App\\Models\\' . $model);
-            $this->model->create($request->only($this->model->getFillable()));
+           $data=$this->model->create($request->only($this->model->getFillable()));
+        
             DB::commit();
             return trans('message.Success_created');
-        } catch (Exception $e) {
+       } catch (Exception $e) {
+            DB::rollback();
+            return $e->getMessage();
+        }
+    }
+
+    public function registerNewUser($request, $model, $role)
+    {
+        DB::beginTransaction();
+        try {
+            $this->model = app('App\\Models\\' . $model);
+           $data=$this->model->create($request->only($this->model->getFillable()));
+            $data->assignRole($role);
+            DB::commit();
+            return trans('message.Success_created');
+       } catch (Exception $e) {
             DB::rollback();
             return $e->getMessage();
         }
@@ -106,24 +123,32 @@ class CrudRepository
 
     public function status($id, $model)
     {
+       
         DB::beginTransaction();
-        try {
+        // try {
             $this->model = app('App\\Models\\' . $model);
+           
             $data = $this->model::find($id);
-
+           
             if ($data->isActive == 1)
+            {
                 $data->update([
                     'isActive' => 0
                 ]);
+            }
             else
+            {
+                
                 $data->update([
                     'isActive' => 1
                 ]);
+            }
             DB::commit();
             return trans('message.Success_status');
-        } catch (Exception $e) {
-            DB::rollback();
-            return $e->getMessage();
-        }
+        // } catch (Exception $e) {
+        //     DB::rollback();
+        //     return $e->getMessage();
+        // }
     }
+    
 }

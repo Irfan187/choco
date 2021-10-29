@@ -1,11 +1,11 @@
 
-<!-- <div class="col-sm-4" style="margin-top:20px;"  >
+<div class="col-sm-4" style="margin-top:20px;"  >
  <form action="{{url('broadcast_group/search')}}" method="POST" enctype="multipart/form-data">
  @csrf
         <input type="text" id="searchbar" placeholder="Search.." name="search">
         <button type="submit"><i class="fa fa-search"></i></button>
 </form>
-</div> -->
+</div>
 
 <div class="card-header">
     <div class="card-title">{{'Group'}}</div>

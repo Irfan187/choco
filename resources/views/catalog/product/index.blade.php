@@ -1,6 +1,6 @@
+<!-- 
 
-
- <!-- <div class="col-sm-4" style="margin-top:20px;"  >
+ <div class="col-sm-4" style="margin-top:20px;"  >
  <form action="{{url('search')}}" method="POST" enctype="multipart/form-data">
  @csrf
         <input type="text" id="searchbar" placeholder="Search.." name="search">
@@ -122,7 +122,7 @@
                                                  <h6> Manufacturing Partner</h6>
                                             </div>
                                             <?php
-                                            $manufacturer=App\Models\ManufacturingPartner::where('id', $product->manufacturing_partner_id)->first();
+                                            $manufacturer=App\Models\User::where('id', $product->manufacturing_partner_id)->first();
                                              ?>
                                             <div class="col-sm-5">
                                                 {{$manufacturer->first_name}}  {{$manufacturer->last_name}}
