@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Catalog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\CrudRepository;
-
+use App\Models\Order;
+use App\Models\Cart;
+use App\Models\Product;
 class ManufacturingPartnerController extends Controller
 {
     protected $crud_repository;
@@ -106,6 +108,24 @@ class ManufacturingPartnerController extends Controller
      */
     public function destroy($id)
     {
+
+        $products = Product::where('manufacturing_partner_id',$id)->get();
+        foreach($products as $p){
+            $ca = Cart::where('product_id',$p->id)->get();
+            $oa = Order::all();
+            foreach($ca as $c){
+                $c->delete();
+            }
+            foreach($oa as $o){
+                $arr = json_decode($o->product_id);
+                if(in_array($p->id,$arr)){
+                    $o->delete();
+                }
+            }
+
+
+            $p->delete();
+        }
         $message = $this->crud_repository->destroy($id, $this->model);
         return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }
