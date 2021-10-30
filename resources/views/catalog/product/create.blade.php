@@ -49,7 +49,7 @@
                             <option disabled selected value="">-- Select --</option>
                             @endempty
                             @foreach ($manufacturers as $manufacturer)
-                            <option value="{{  $manufacturer->id }}">{{ $manufacturer->franchise_name  }}</option>
+                            <option value="{{  $manufacturer->id }}">{{ $manufacturer->first_name  }}</option>
                             @endforeach
                         </select>
                     </div>
