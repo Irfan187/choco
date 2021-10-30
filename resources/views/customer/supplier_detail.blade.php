@@ -2,8 +2,14 @@
 @section('content')
 <style>
     input{
-        background: #f5f6fd;
+        background: white;
         border:none;
+    }
+    .card{
+        background: white;
+    }
+    table{
+        background:white;
     }
 </style>
     <div class="container my-4">
@@ -70,9 +76,9 @@
         </section>
     </div>
 
-    <div class="table my-4">
+    <div class="table my-4 card">
         <div class="table-responsive">
-            <table class="table table-bordered border-top mb-0">
+            <table class="table table-bordered border-top mb-0" style="background:white;">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -89,7 +95,10 @@
                 <tbody>
                 @php $i = 1; @endphp
                 @foreach($products as $product)
-                @php $unit = App\Models\Unit::find($product->unit_id);@endphp
+                @php $unit = App\Models\Unit::find($product->unit_id);
+              
+                    $c = App\Models\Cart::where('product_id',$product->id)->where('customer_id',auth()->user()->id)->first();
+                @endphp
                     
                     <tr>
                         <th>{{ $i++ }}</th>
@@ -117,9 +126,13 @@
                         
                         
                         
-                        
-                        
+                       
+                        @if(empty($c))
                         <td><button onclick="addtocart({{$product->id}})" id="addtocart{{$product->id}}" class="btn add-to-cart-btn">Add to cart</button></td>
+                        @else
+                        <td><button  id="addtocart{{$product->id}}" class="btn add-to-cart-btn"><i class="fa fa-check"></i> Added</button></td>
+
+                        @endif
                     </tr>
                     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                     <script>
@@ -191,7 +204,7 @@
                                             timer: 1500
                                         });
 
-                                       
+                                        window.location = "/customer/supplierdetails/"+s_id;
                                         
                                     }
                                 });

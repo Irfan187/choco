@@ -102,7 +102,7 @@
                         <table class="table table-bordered text-center rounded-lg">
                             <thead class="thead">
                                 <tr>
-                                   
+                                <th scope="col">#</th>
                                     <th scope="col">Item</th>
                                     <th scope="col">Price/unit</th>
 
@@ -113,9 +113,11 @@
                             </thead>
 
                             <tbody>
+                            @php $i = 1; @endphp
                                 @foreach($prod_ids as $id)
                                 @php $prod = App\Models\Product::find($id); @endphp
                                 <tr>
+                                <td scope="row">{{ $i++ }}</td>
                                     <td scope="row">{{ $prod->name }}</td>
                                     <td scope="row">{{ $prod->price }}</td>
 

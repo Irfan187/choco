@@ -26,7 +26,16 @@
     <link rel="stylesheet" href="{{asset('css/slider.css')}}">
     <script src="{{asset('js/slider.js')}}" ></script>
 
-
+<style>
+    #lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    border-radius: 50%;
+}
+</style>
 
     <!-- bootstrap -->
 
@@ -61,6 +70,24 @@
                 <div class="side-app">
                     <div class="page-header">
                         <h4 class="page-title">Dashboard </h4>
+                        @role('Customer')
+                        @php
+                        $c = App\Models\Cart::where('customer_id',auth()->user()->id)->get();
+                        @endphp
+                @if(count($c) > 0)
+                        <li>
+     
+     <a href="{{url('customer/cart_page')}}" class="icon-shopping-cart" style="font-size: 25px"><i class="fa fa-shopping-cart" style="font-size: 25px"></i>
+     <asp:Label ID="lblCartCount" runat="server" CssClass="badge badge-warning"  ForeColor="White"/>{{count($c)}}</a>
+</li>
+@else
+<li>
+     <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+     <a href="#" class="icon-shopping-cart" style="font-size: 25px">
+     <asp:Label ID="lblCartCount" runat="server" CssClass="badge badge-warning"  ForeColor="White"/>0</a>
+</li>
+@endif
+                        @endrole
                         {{-- <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Dashboard </li>

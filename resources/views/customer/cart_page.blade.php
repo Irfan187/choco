@@ -30,7 +30,7 @@
                     <div class="col-9">
                     </div>
                     <div class="col-2">
-                        <a href="" class="btn" style="background-color: black;color:white
+                        <a href="" class="btn" style="background-color: white;color:black
                         ">Order for another supplier</a>
                     </div>
                 </div>
@@ -111,6 +111,8 @@
                         <!-- <div class="col-2 heading">Supplier</div> -->
                         <div class="col-2 heading">Unit</div>
                         <div class="col-2 heading">Total</div>
+                        <div class="col-2 heading">Action</div>
+
                     </div>
                 </div>
                 </div>
@@ -136,6 +138,9 @@
                         <div class="col-2">
                         {{ $cart->total }}
                         </div>
+                        <div class="col-2">
+                        <a href="{{route('remove_item',$cart->id)}}"><i style="color:red" class="fa fa-times"></i></a>
+                        </div>
                     </div>
 
                 </div>
@@ -145,8 +150,8 @@
                 @if(in_array($sup->id,$id_array))
                 <div class="card-footer">
                        <div class=" d-flex flex-col-reverse float-right">
-                        <a href="#" style="background:#a54f18;color:white" class="btn mx-1 ">modifiy</a>
-                        <button onclick="confirm({{$sup->id}})" style="background:#f5b0c7;color:white" class="btn mx-1 ">confrim</button>
+                        <a href="#" style="background:orange;color:white" class="btn mx-1 ">modifiy</a>
+                        <button onclick="confirm({{$sup->id}})" style="background:green;color:white" class="btn mx-1 ">confrim</button>
 
                        </div>
                 </div>

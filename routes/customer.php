@@ -48,6 +48,9 @@ Route::get('/myorders', function () {
 Route::get('add_to_cart', [CartController::class, 'addToCart'])->name('add_to_cart');
 Route::post('confirm_order', [CartController::class, 'confirmOrder'])->name('confirm_order');
 
+Route::get('remove/{id}', [CartController::class, 'removeItem'])->name('remove_item');
+
+
 
 });
 

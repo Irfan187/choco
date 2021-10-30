@@ -23,7 +23,7 @@ class CartController extends Controller
 
 
         $cart = new Cart();
-        $cart->customer_id = 1;
+        $cart->customer_id = auth()->user()->id;
         $cart->product_id = $prod->id;
         $cart->supplier_id = $sup->id;
         $cart->price = $prod->price;
@@ -91,5 +91,11 @@ class CartController extends Controller
 
 
 
+    }
+
+    public function removeItem($id){
+        Cart::find($id)->delete();
+
+        return back()->with('success','Item deleted from cart');
     }
 }

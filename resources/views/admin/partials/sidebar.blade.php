@@ -49,8 +49,8 @@
 
         @role('Customer')
         <li><a class="slide-item" href="/customer/suppliers">Suppliers</a></li>
-        <li><a class="slide-item" href="{{url('customer/cart_page')}}">Cart</a></li>
-        <li><a class="slide-item" href="{{url('customer/myorders')}}">Orders</a></li>
+        <!-- <li><a class="slide-item" href="{{url('customer/cart_page')}}">Cart</a></li> -->
+        <li><a class="slide-item" href="{{url('customer/myorders')}}">My Orders</a></li>
         @endrole
 
         @role('Supplier')
