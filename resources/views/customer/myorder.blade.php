@@ -17,7 +17,7 @@
         }
 
         .total{
-            font-size:28px;
+            font-size:23px;
         }
 
 </style>
@@ -57,7 +57,7 @@
                     <div class="card-header">
                         <section class="col-md-12">
                             <div class="row">
-                                <div class="col-10">
+                                <div class="col-9">
                                     <table class="">
                                         <thead>
                                             <tr>
@@ -87,10 +87,10 @@
                                         </thead>
                                     </table>
                                 </div>
-                                <div class="col-2 my-4">
+                                <div class="col-3 my-4">
                                     <tr>
                                         <td>
-                                            <h4  class="total">Total: <span>€{{$order->total}}</span>
+                                            <h4  class="total">Total: <span>{{$order->total}} €</span>
                                             </h4>
                                         </td>
                                     </tr>
@@ -103,12 +103,13 @@
                             <thead class="thead">
                                 <tr>
                                 <th scope="col">#</th>
-                                    <th scope="col">Item</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Unit</th>
                                     <th scope="col">Price/unit</th>
 
                                     
                                     <th scope="col">Minimum Quantity</th>
-                                    <th scope="col">Unit</th>
+                                    
                                 </tr>
                             </thead>
 
@@ -119,11 +120,11 @@
                                 <tr>
                                 <td scope="row">{{ $i++ }}</td>
                                     <td scope="row">{{ $prod->name }}</td>
-                                    <td scope="row">{{ $prod->price }}</td>
+                                    <td scope="row">{{$prod->unit->name}}</td>
+                                    <td scope="row">{{ $prod->price }} €</td>
 
                                     
                                     <td scope="row">{{$order->min_qty}}</td>
-                                    <td scope="row">{{$prod->unit->name}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

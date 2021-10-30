@@ -30,7 +30,7 @@
                     <div class="col-9">
                     </div>
                     <div class="col-2">
-                        <a href="" class="btn" style="background-color: white;color:black
+                        <a href="/customer/suppliers" class="btn" style="background-color: white;color:black
                         ">Order for another supplier</a>
                     </div>
                 </div>
@@ -45,45 +45,61 @@
             @endphp
 
             
-            @foreach($carts as $cart)
+            @foreach($suppliers as $sup)
 
 
                 @php
-                    $prod = App\Models\Product::find($cart->product_id);
-                    $sup = App\Models\User::role('Supplier')->find($cart->supplier_id);
-                    $date = explode(" ",$cart->created_at);
+                    $carts = App\Models\Cart::where('supplier_id',$sup->id)->where('customer_id',auth()->user()->id)->get();
+                    $prod_ids = [];
+                    
+                    $minqty = [];
+                    $min = 0;
+                    $all = [];
+                    $allqty = [];
+
+
+                    foreach($carts as $cart){
+                        array_push($prod_ids,$cart->product_id);
+                        array_push($all,$cart->total);
+                        array_push($allqty,$cart->qty);
+
+                        
+
+                        if($cart->min_qty != NULL){
+                            $min = $cart->min_qty;
+                        }
+                        array_push($minqty,$min);
+
+                    }
+                    
+                  
+                   
 
                 @endphp
+            @if(count($carts) > 0)
             <div class="card">
                 @if(!in_array($sup->id,$id_array))
                 <div class="card-header" style="background-color: rgb(236, 96, 127) ">
                         <section class="col-md-12">
                             <div class="row">
-                                <div class="col-9">
+                                <div class="col-9 my-4">
                                     <table class="">
                                         <thead>
 
                                             <tr>
-                                                <th class="text-right px-2">
-                                                    <h5>Supplier : </h5>
-                                                </th>
-                                                <th class="text-left px-2">
-                                                    <h6> {{$sup->first_name}} {{$sup->last_name}} </h6>
-                                                </th>
+                                                <td class="text-right">
+                                                    <h5 class="total">Supplier : </h5>
+                                                </td>
+                                                <td class="text-left">
+                                                    <h6 class="total"> {{$sup->first_name}} {{$sup->last_name}} </h6>
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <th class="text-right px-2">
-                                                    <h5> Date : </h5>
-                                                </th>
-                                                <th class="text-left px-2">
-                                                    <h6> {{ $date[0] }} </h6>
-                                                </th>
-                                            </tr>
+                                            
                                         </thead>
                                     </table>
                                 </div>
                                 <div class="col-3 my-4">
-                                    @php $c = App\Models\Cart::where('supplier_id',$sup->id)->get();
+                                    @php $c = App\Models\Cart::where('supplier_id',$sup->id)->where('customer_id',auth()->user()->id)->get();
                                     $total = 0;
                                         foreach($c as $data){
                                             $total = $total + $data->total;
@@ -91,7 +107,7 @@
                                     @endphp
                                     <tr>
                                         <td>
-                                            <h4 class="total">Total: <span>€{{$total}}</span>
+                                            <h4 class="total">Total: <span>{{$total}} €</span>
                                             </h4>
                                         </td>
                                     </tr>
@@ -103,13 +119,13 @@
                 <div class="card-header" style="background-color: rgb(236, 96, 127) ">
                     <div class="col-12">
                     <div class="row">
-                        <!-- <div class="col-2">id#</div> -->
-                        <div class="col-2 heading">Item</div>
-                        <div class="col-2 heading">Quantity</div>
+                        <div class="col-2 heading">#</div>
+                        <div class="col-2 heading">Product Name</div>
+                        <div class="col-2 heading">Required Quantity</div>
                         <div class="col-2 heading">Minimum Quantity</div>
 
                         <!-- <div class="col-2 heading">Supplier</div> -->
-                        <div class="col-2 heading">Unit</div>
+                        <!-- <div class="col-2 heading">Unit</div> -->
                         <div class="col-2 heading">Total</div>
                         <div class="col-2 heading">Action</div>
 
@@ -118,45 +134,47 @@
                 </div>
 
                 @endif
+                @php $j = 1; @endphp
 
                 <div class="card-body">
                     <div class="col-12">
+                    @for($i = 0; $i < count($prod_ids); $i++)
+                    @php $prod = App\Models\Product::find($prod_ids[$i]); @endphp
                     <div class="row mb-2">
-                        <!-- <div class="col-2">1</div> -->
+                        <div class="col-2">{{$j++}}</div>
 
                         <div class="col-2">{{ $prod->name }}</div>
-                        <div class="col-2">{{ $cart->qty }}</div>
-                        @if(isset($cart->min_qty))
-                        <div class="col-2">{{ $cart->min_qty }}</div>
-                        @else
-                        <div class="col-2">0</div>
-                        @endif
+                        <div class="col-2">{{ $allqty[$i] }}</div>
+                       
+                        <div class="col-2">{{ $minqty[$i] }}</div>
+                       
                         <!-- <div class="col-2">{{ $sup->first_name }}  {{ $sup->last_name }}</div> -->
-                        <div class="col-2">
+                        <!-- <div class="col-2">
                         {{ $prod->unit->name }}
-                        </div>
+                        </div> -->
                         <div class="col-2">
-                        {{ $cart->total }}
+                        {{ $all[$i] }} €
                         </div>
                         <div class="col-2">
                         <a href="{{route('remove_item',$cart->id)}}"><i style="color:red" class="fa fa-times"></i></a>
                         </div>
                     </div>
+                    @endfor
 
                 </div>
 
                 </div>
-                @php array_push($id_array,$sup->id); @endphp
-                @if(in_array($sup->id,$id_array))
+                
                 <div class="card-footer">
                        <div class=" d-flex flex-col-reverse float-right">
-                        <a href="#" style="background:orange;color:white" class="btn mx-1 ">modifiy</a>
+                        <a href="/customer/suppliers" style="background:orange;color:white" class="btn mx-1 ">modifiy</a>
                         <button onclick="confirm({{$sup->id}})" style="background:green;color:white" class="btn mx-1 ">confrim</button>
 
                        </div>
                 </div>
-                @endif
+               
             </div>
+            @endif
            
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script>

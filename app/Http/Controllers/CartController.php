@@ -35,7 +35,8 @@ class CartController extends Controller
         $cart->save();
 
         $response = [
-            'data' => "Item added to cart successfully"
+            'data' => $request->s_id,
+
         ];
 
        return response(json_encode($response));

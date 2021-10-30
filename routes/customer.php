@@ -29,10 +29,9 @@ Route::get('/supplierdetails/{id}', function ($id) {
 
 Route::get('/cart_page', function () {
 
-    $carts = Cart::all();
+    $suppliers = User::role('Supplier')->get();
 
-
-    return view('customer.cart_page',compact('carts'));
+    return view('customer.cart_page',compact('suppliers'));
 })->name('cart_page');
 
 

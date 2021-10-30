@@ -1,10 +1,10 @@
-<div class="app-header1 header py-1 d-flex">
+<div class="app-header1 header py-1 d-flex" style="background:#ec607f !important;">
     <div class="container-fluid">
         <div class="d-flex">
             <a class="header-brand" href="index.html">
                 {{-- <img src="{{asset('admin/assets/images/brand/logo1.png')}}" class="header-brand-img" alt="Lmslist
                 logo"> --}}
-                    <h2 style='color:#D3D3D3; margin-top:12px;' >Supplier Franchise Management</h2>
+                    <h2 style='color:white; margin-top:12px;' >Supplier Franchise Management</h2>
             </a>
             
             <!--<a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#"></a>-->

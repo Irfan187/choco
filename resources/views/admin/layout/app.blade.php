@@ -35,6 +35,11 @@
     vertical-align: top;
     border-radius: 50%;
 }
+
+::marker {
+    display: none;
+    color: white;
+}
 </style>
 
     <!-- bootstrap -->

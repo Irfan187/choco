@@ -61,11 +61,11 @@
             @foreach($categories as $category)
             <div class="slide text-center">
                 <a href="">
-                    <img src="{{ asset('/images/Category/'. $category->image) }}" style="width:4rem;max-width:200%" class="avatar avatar-lgg brround">
+                    <img src="{{ asset('/images/Category/'. $category->image) }}" style="" class="avatar avatar-lgg">
 
                 </a>
                 <center>
-                <h5 style="margin-top:15px">{{$category->name}}</h5>
+                <h5 style="margin-top:30px">{{$category->name}}</h5>
                 </center>
             </div>
             @endforeach
@@ -87,7 +87,7 @@
                         <th>Price/unit</th>
                         <th>Available Quantity</th>
                         <th>Total</th>
-                        <th>Quantity</th>
+                        <th>Required Quantity</th>
                         <th>Action</th>
 
                     </tr>
@@ -108,7 +108,7 @@
                         <td>{{ $product->quantity }}</td>
                         <td><input id="total{{$product->id}}" type="number" style="width:60px" value="{{ $product->price }}" min="1" readonly></td>
                         <td>
-                            Req Quantity:<br><br>
+                           
                             <input id="qty{{$product->id}}" type="number" style="width:40px" value="1" min="1" readonly>
                             <button class="plus" onclick="increment({{$product->id}})"><b>+</b></button>
                             <button class="minus" onclick="decrement({{$product->id}})"><b>-</b></button><br><br>
@@ -170,8 +170,10 @@
 
                             $('#min_qty'+id).change(function () {
                                 if(this.checked) {
+                                    console.log(id)
                                     document.getElementById("showqty"+id).style.display = "block";
                                 }else{
+                                    console.log(id+ " hi")
                                     document.getElementById("showqty"+id).style.display = "none";
                                 }
                             
@@ -204,7 +206,7 @@
                                             timer: 1500
                                         });
 
-                                        window.location = "/customer/supplierdetails/"+s_id;
+                                        location.reload();
                                         
                                     }
                                 });
