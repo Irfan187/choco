@@ -14,6 +14,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\CrudRepository;
 use App\Models\ManufacturingPartner;
 use Spatie\Permission\Models\Role;
+use App\Models\Order;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -96,9 +98,13 @@ class ProductController extends Controller
         $product = app('App\\Models\\' . $this->model)->find($id);
         $categories = Category::IsActive()->get();
         $manufacturers=User::role('Manufacturer')->isActive()->get();
+        $suppliers=User::role('Supplier')->isActive()->get();
+        $units=Unit::get();
+
+
 
         $view = $this->view;
-        return view('catalog.'.$this->view.'.create', compact('product', 'categories', 'manufacturers','view'));
+        return view('catalog.'.$this->view.'.create', compact('product', 'categories', 'manufacturers','view','suppliers','units'));
     }
 
     /**
@@ -147,6 +153,17 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        $ca = Cart::where('product_id',$id)->get();
+            $oa = Order::all();
+            foreach($ca as $c){
+                $c->delete();
+            }
+            foreach($oa as $o){
+                $arr = json_decode($o->product_id);
+                if(in_array($p->id,$arr)){
+                    $o->delete();
+                }
+            }
         $message = $this->crud_repository->destroy($id, $this->model);
         return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }

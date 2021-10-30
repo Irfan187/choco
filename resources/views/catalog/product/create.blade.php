@@ -60,6 +60,7 @@
                             @empty($product)
                             <option disabled selected value="">-- Select --</option>
                             @endempty
+                            
                             @foreach ($suppliers as $supplier)
                             <option value="{{  $supplier->id }}">{{ $supplier->first_name }}  {{ $supplier->last_name }}  </option>
                             @endforeach

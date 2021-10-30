@@ -70,12 +70,12 @@
                                 class="label label-pill label-success mt-2" style="font-size:11px;"><i class="fa fa-eye"></i> view</span>
                         </a>
                         </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <a href="{{ route('product.edit',$product->id) }}" class="btn btn-primary btn-sm"><i
                                         class="fa fa-edit text-white"></i></a>
                              </div>
 
-                             <div class="col-sm-3">
+                             <div class="col-sm-2">
                                     <form action="{{ route('product.destroy',$product->id) }}" method="POST" enctype="multipart/form-data"> 
                                         @csrf
                                         @method('DELETE') 

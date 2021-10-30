@@ -44,11 +44,11 @@
                     </td>
                     <td>
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                  <a href="{{ route('category.edit',$category->id) }}" class="btn btn-primary btn-sm"><i
                                   class="fa fa-edit text-white"></i></a>
                             </div>
-                             <div class="col-sm-3">
+                             <div class="col-sm-2">
                                     <form action="{{ route('category.destroy',$category->id) }}" method="POST" enctype="multipart/form-data"> 
                                         @csrf
                                         @method('DELETE') 

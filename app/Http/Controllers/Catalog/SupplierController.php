@@ -103,6 +103,14 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
+        $ca = Cart::where('supplier_id',$id)->get();
+            $oa = Order::where('supplier_id',$id)->get();
+            foreach($ca as $c){
+                $c->delete();
+            }
+            foreach($oa as $o){
+                $o->delete();
+            }
         $message = $this->crud_repository->destroy($id, $this->model);
         return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }

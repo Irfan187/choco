@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Catalog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\CrudRepository;
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Cart;
+
 
 class CategoryController extends Controller
 {
@@ -24,6 +28,7 @@ class CategoryController extends Controller
     }
     public function index()
     {
+                
         $categories = app('App\\Models\\' . $this->model)->all();
         $view = $this->view;
         return view('mycomponent.datatable', compact('categories', 'view'));
@@ -101,6 +106,24 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        $category = Category::find($id);
+        // dd();
+        foreach($category->products as $p){
+            $ca = Cart::whereIn('product_id',$p->id)->get();
+            $oa = Order::all();
+            foreach($ca as $c){
+                $c->delete();
+            }
+            foreach($oa as $o){
+                $arr = json_decode($o->product_id);
+                if(in_array($p->id,$arr)){
+                    $o->delete();
+                }
+            }
+
+
+            $p->delete();
+        }
         $message = $this->crud_repository->destroy($id, $this->model);
         return redirect()->route($this->view.'.index')->with('status', $this->model . $message);
     }
