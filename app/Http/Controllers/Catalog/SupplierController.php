@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Catalog;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\CrudRepository;
+use App\Models\Order;
+use App\Models\Cart;
 
 class SupplierController extends Controller
 {
