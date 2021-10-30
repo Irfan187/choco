@@ -40,7 +40,7 @@ class ProductController extends Controller
         // $view = $this->view;
         // return view('mycomponent.datatable', compact('products', 'view'));
         $products = app('App\\Models\\' . $this->model)->all();
-        dd($products);
+        
         // $inventories = Inventory::with('product')->get();
         $view = $this->view;
         return view('mycomponent.datatable',compact('products','view'));
