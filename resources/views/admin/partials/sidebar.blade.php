@@ -38,6 +38,8 @@
         @role('Admin')
         <li><a class="slide-item" href="{{ route('product.index') }}">Product</a></li>
         <li><a class="slide-item" href="{{ route('category.index') }}">Category</a></li>
+        <li><a class="slide-item" href="{{url('allorders')}}">Orders</a></li>
+
         <li><a class="slide-item" href="{{ route('unit.index') }}">Unit</a></li>
         <!-- <li><a class="slide-item" href="{{ route('inventory.index') }}">Inventory</a></li> -->
         <li><a class="slide-item" href="{{ route('customer.index') }}">Customer</a></li>

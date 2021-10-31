@@ -104,9 +104,9 @@
                         <th>{{ $i++ }}</th>
                         <td>{{ $product->name }}</td>
                         <td>{{ $unit->name }}</td>
-                        <td><input id="price{{$product->id}}" type="number" style="width:50px" value="{{ $product->price }}" min="1" readonly></td>
+                        <td><input id="price{{$product->id}}" type="number" style="width:40px" value="{{ $product->price }}" min="1" readonly> €</td>
                         <td>{{ $product->quantity }}</td>
-                        <td><input id="total{{$product->id}}" type="number" style="width:60px" value="{{ $product->price }}" min="1" readonly></td>
+                        <td><input id="total{{$product->id}}" type="number" style="width:40px" value="{{ $product->price }}" min="1" readonly>€</td>
                         <td>
                            
                             <input id="qty{{$product->id}}" type="number" style="width:40px" value="1" min="1" readonly>
@@ -168,13 +168,13 @@
 
                             }
 
-                            $('#min_qty'+id).change(function () {
+                            $('#min_qty'+<?php echo $product->id?>).change(function () {
                                 if(this.checked) {
                                     console.log(id)
-                                    document.getElementById("showqty"+id).style.display = "block";
+                                    document.getElementById("showqty"+<?php echo $product->id?>).style.display = "block";
                                 }else{
                                     console.log(id+ " hi")
-                                    document.getElementById("showqty"+id).style.display = "none";
+                                    document.getElementById("showqty"+<?php echo $product->id?>).style.display = "none";
                                 }
                             
                             });

@@ -1,85 +1,151 @@
+@extends('admin.layout.app')
+@section('content')
+<style type="text/css">
+        .thead th,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: white;
+        }
 
+        .thead,
+        .card-header {
+            background-color: rgb(236, 96, 127);
+        }
 
+        .total{
+            font-size:23px;
+        }
 
-   <div class="card-header">
-       <div class="card-title">{{$view}}</div>
-       <div class="col-md-12">
-
-
-       </div>
-   </div>
-   <div class="card-body">
-       <div class="table-responsive">
-           @include('message')
-           <table id="example" class="table table-striped table-bordered">
-               <thead>
-                   <tr>
-                       <th class="wd-15p">Order Number</th>
-                       <th class="wd-10p">Product</th>
-                       <th class="wd-10p">Price</th>
-                       <th class="wd-10p">Qty</th>
-                       <th class="wd-10p">Min Qty</th>
-                       <th class="wd-10p">Total</th>
-                       <th class="wd-10p">Unit</th>
-                       <th class="wd-10p">Supplier</th>
-                       <th class="wd-10p">Customer</th>
-                       <th class="wd-10p">Action</th>
-
-
-
-                   </tr>
-               </thead>
-               <tbody>
-                   @foreach ($orders as $order)
-                   <tr>
-                       <td>{{ $order->order_number }}</td>
-                       <?php
-                            $products=[];
-                            $prod_ids = json_decode($order->product_id);
-                            foreach($prod_ids as $id)
-                            {
-                                $product = App\Models\Product::find($id);
-                                array_push($products,$product);
-                            }
-                       ?>
-                     <td>
-                         @foreach($products as $product)
-                         {{$product->name}}<br>
-                         @endforeach
-                     </td>
-                       @isset($order->price)
-                       <td>{{ $order->price }}</td>
-                       @else
-                       <td>-</td>
-                       @endisset
-                       <td>{{ $order->qty }}</td>
-                       @if(!empty($order->min_qty))
-                       <td>{{ $order->min_qty }}</td>
-                       @else
-                       <td>-</td>
-                       @endif
-                       <td>{{ $order->total}}</td>
-                       @isset($order->unit)
-                       <td>{{ $order->unit }}</td>
-                       @else
-                       <td>-</td>
-                       @endisset
-                       <?php
-                      $supplier= App\Models\User::role('Supplier')->find($order->supplier_id);
-                      $customer=App\Models\User::role('Customer')->find($order->customer_id);
-                       ?>
-                       <td>{{ $supplier->first_name }} {{ $supplier->last_name }}</td>
-                       <td>{{ $customer->first_name }} {{ $customer->last_name }}</td>
-
-                        <td>
-                            <span
-                            class="label label-pill label-success" style="font-size:13px;">{{ 'Confirmed' }}
+</style>
+    <div class="card my-5">
+            <div class="card-header">
+                <h3 class="card-title">My Orders</h3>
+                <div class="card-options">
+                    <span class="input-group-btn mx-2">
+                        <!-- <a class="btn">
+                            <span class="fe fe-filter text-white" type="datepicker"></span>
+                        </a> -->
+                    </span>
+                    <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-sm" placeholder="Search something..." name="s">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <span class="fe fe-search" style="color:pink" ></span>
+                                </button>
                             </span>
-                       </td>
+                        </div>
+                    </form>
+                </div>
+            </div>
+           
+            @foreach($orders as $order)
+            @php
+                    $prod_ids = json_decode($order->product_id);
+                    
+                    $sup = App\Models\User::role('Customer')->find($order->customer_id);
+                    $date = explode(" ",$order->created_at);
+                    
 
-                   </tr>
-                   @endforeach
-               </tbody>
-           </table>
-       </div>
-   </div>
+                @endphp
+            <section class="orderdetails my-2 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <section class="col-md-12">
+                            <div class="row">
+                                <div class="col-9">
+                                    <table class="">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-right px-2">
+                                                    <h5>Order# : </h5>
+                                                </th>
+                                                <th class="text-left px-2">
+                                                    <h6> {{$order->order_number}}</h6>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-right px-2">
+                                                    <h5>Supplier : </h5>
+                                                </th>
+                                                <th class="text-left px-2">
+                                                    <h6> {{$sup->first_name}} {{$sup->last_name}} </h6>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-right px-2">
+                                                    <h5>Order Date : </h5>
+                                                </th>
+                                                <th class="text-left px-2">
+                                                    <h6> {{ $date[0] }} </h6>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="col-3 my-4">
+                                    <tr>
+                                        <td>
+                                            <h4  class="total">Total: <span>{{$order->total}} €</span>
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered text-center rounded-lg">
+                            <thead class="thead">
+                                <tr>
+                                <th scope="col">#</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Price/unit</th>
+
+                                    <th scope="col">Required Quantity</th>
+                                    
+                                    <th scope="col">Minimum Quantity</th>
+                                    
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            @php $i = 1; @endphp
+                                @foreach($prod_ids as $id)
+                                @php $prod = App\Models\Product::find($id); @endphp
+                                <tr>
+                                <td scope="row">{{ $i++ }}</td>
+                                    <td scope="row">{{ $prod->name }}</td>
+                                    <td scope="row">{{$prod->unit->name}}</td>
+                                    <td scope="row">{{ $prod->price }} €</td>
+
+                                    <td scope="row">{{$order->qty}}</td>
+                                    <td scope="row">{{$order->min_qty}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-10 float-left"></div>
+                                <div class="col-2 float-right text-right">
+                                    <span class="btn btn-success ">{{ $order->status }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            @endforeach
+           
+
+
+    </div>
+@endsection

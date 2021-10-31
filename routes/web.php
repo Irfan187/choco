@@ -17,7 +17,7 @@ use Spatie\Permission\Models\Role;
 // use App\Http\Controllers\Auth\CustomerAuthenticatedSessionController;
 
 
-
+use App\Models\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +86,15 @@ require __DIR__ . '/customer.php';
     Route::resource('order', OrderController::class);
     // Route::post('confirm_order', [OrderController::class, 'confirm_order'])->name('confirm_order');
     Route::get('new_order',[OrderController::class,'new_order']);
+
+    Route::get('/allorders', function () {
+
+        $orders = Order::all();
+
+    return view('catalog.order.allorders',compact('orders'));
+
+
+});
 
 
 });
