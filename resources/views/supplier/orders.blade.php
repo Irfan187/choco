@@ -70,7 +70,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="text-right px-2">
-                                                    <h5>Supplier : </h5>
+                                                    <h5>Customer : </h5>
                                                 </th>
                                                 <th class="text-left px-2">
                                                     <h6> {{$sup->first_name}} {{$sup->last_name}} </h6>
