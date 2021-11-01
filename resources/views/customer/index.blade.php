@@ -21,7 +21,10 @@
                            foreach($categories as $category)
                            {
                               $name= App\Models\Category::find($category);
-                              array_push($names,$name);
+                              if(!in_array($name,$names)){
+                                array_push($names,$name);
+                               }
+                              
                            }
                             ?>
                             <div class="col">

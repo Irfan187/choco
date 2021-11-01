@@ -46,7 +46,7 @@
             @foreach($orders as $order)
             @php
                     $prod_ids = json_decode($order->product_id);
-                    
+                    $qtys = json_decode($order->qty);
                     $sup = App\Models\User::role('Customer')->find($order->customer_id);
                     $date = explode(" ",$order->created_at);
                     
@@ -115,7 +115,7 @@
                             </thead>
 
                             <tbody>
-                            @php $i = 1; @endphp
+                            @php $i = 1;$k=0; @endphp
                                 @foreach($prod_ids as $id)
                                 @php $prod = App\Models\Product::find($id); @endphp
                                 <tr>
@@ -124,9 +124,10 @@
                                     <td scope="row">{{$prod->unit->name}}</td>
                                     <td scope="row">{{ $prod->price }} €</td>
 
-                                    <td scope="row">{{$order->qty}}</td>
+                                    <td scope="row">{{$qtys[$k]}}</td>
                                     <td scope="row">{{$order->min_qty}}</td>
                                 </tr>
+                                @php $k++; @endphp
                                 @endforeach
                             </tbody>
                         </table>
@@ -148,4 +149,6 @@
 
 
     </div>
+    {{$orders->links()}}
+
 @endsection

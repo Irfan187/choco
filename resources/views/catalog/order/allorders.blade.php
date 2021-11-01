@@ -46,7 +46,7 @@
             @foreach($orders as $order)
             @php
                     $prod_ids = json_decode($order->product_id);
-                    
+                    $qtys = json_decode($order->qty);
                     $sup = App\Models\User::role('Supplier')->find($order->supplier_id);
                     $date = explode(" ",$order->created_at);
                     
@@ -115,7 +115,7 @@
                             </thead>
 
                             <tbody>
-                            @php $i = 1; @endphp
+                            @php $i = 1;$k=0; @endphp
                                 @foreach($prod_ids as $id)
                                 @php $prod = App\Models\Product::find($id); @endphp
                                 <tr>
@@ -124,9 +124,10 @@
                                     <td scope="row">{{$prod->unit->name}}</td>
                                     <td scope="row">{{ $prod->price }} €</td>
 
-                                    <td scope="row">{{$order->qty}}</td>
+                                    <td scope="row">{{$qtys[$k]}}</td>
                                     <td scope="row">{{$order->min_qty}}</td>
                                 </tr>
+                                @php $k++; @endphp
                                 @endforeach
                             </tbody>
                         </table>
@@ -136,16 +137,39 @@
                             <div class="row">
                                 <div class="col-10 float-left"></div>
                                 <div class="col-2 float-right text-right">
-                                    <span class="btn btn-success ">{{ $order->status }}</span>
+                                    <select name="ord_status" id="ord_status{{$order->id}}" class="form-control" >
+                                        @if($order->status == "Confirmed")
+                                        <option value="Confirmed" selected>Confirmed</option>
+                                        <option value="Shipped">Shipped</option>
+                                        <option value="Pending">Pending</option>
+                                        @elseif($order->status == "Shipped")
+                                        <option value="Confirmed" >Confirmed</option>
+                                        <option value="Shipped" selected>Shipped</option>
+                                        <option value="Pending">Pending</option>
+                                        @elseif($order->status == "Pending")
+                                        <option value="Confirmed" >Confirmed</option>
+                                        <option value="Shipped" >Shipped</option>
+                                        <option value="Pending" selected>Pending</option>
+                                        @endif
+                                    </select>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <script>
+                            $('#ord_status'+<?php echo $order->id;?>).on('change', function() {
+                                alert(<?php echo $order->id;?>)
+                            });
+            </script>
             @endforeach
            
 
 
     </div>
+
+    {{$orders->links()}}
 @endsection

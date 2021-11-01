@@ -13,7 +13,7 @@ class OrderController extends Controller
     public function index()
     {
        $view=$this->view;
-       $orders=Order::where('supplier_id',auth()->user()->id)->get();
+       $orders=Order::where('supplier_id',auth()->user()->id)->paginate(1);
        return view('mycomponent.datatable', compact('orders','view'));
     }
 }

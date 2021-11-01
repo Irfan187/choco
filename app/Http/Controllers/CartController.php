@@ -54,12 +54,12 @@ class CartController extends Controller
 
         $c = Cart::where('supplier_id',$sup->id)->get();
         $total = 0;
-        $qty = 0;
+        $qty = [];
         $product_ids = [];
         foreach($c as $data){
             $total = $total + $data->total;
-            $qty = $qty + $data->qty;
-
+           
+            array_push($qty,$data->qty);
             array_push($product_ids,$data->product_id);
         }
 
@@ -73,7 +73,7 @@ class CartController extends Controller
         $order->product_id = json_encode($product_ids);
         $order->supplier_id = $sup->id;
 
-        $order->qty = $qty;
+        $order->qty = json_encode($qty);
         $order->total = $total;
 
         $order->save();

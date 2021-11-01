@@ -89,7 +89,7 @@ require __DIR__ . '/customer.php';
 
     Route::get('/allorders', function () {
 
-        $orders = Order::all();
+        $orders = Order::paginate(5);
 
     return view('catalog.order.allorders',compact('orders'));
 

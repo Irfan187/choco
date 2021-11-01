@@ -21,9 +21,11 @@ Route::get('/supplierdetails/{id}', function ($id) {
     $categories = [];
     foreach($products as $product){
         $cat = Category::find($product->category_id);
-        array_push($categories,$cat);
+        if(!in_array($cat,$categories)){
+            array_push($categories,$cat);
+        }
     }
-
+    
     return view('customer.supplier_detail',compact('products','supplier','categories'));
 })->name('supplierdetails');
 
