@@ -58,10 +58,12 @@
                     $allqty = [];
 
 
+
                     foreach($carts as $cart){
                         array_push($prod_ids,$cart->product_id);
                         array_push($all,$cart->total);
                         array_push($allqty,$cart->qty);
+
 
                         
 

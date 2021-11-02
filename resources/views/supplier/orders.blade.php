@@ -47,6 +47,8 @@
             @php
                     $prod_ids = json_decode($order->product_id);
                     $qtys = json_decode($order->qty);
+                    $min_qtys = json_decode($order->min_qty);
+
                     $sup = App\Models\User::role('Customer')->find($order->customer_id);
                     $date = explode(" ",$order->created_at);
                     
@@ -125,7 +127,7 @@
                                     <td scope="row">{{ $prod->price }} €</td>
 
                                     <td scope="row">{{$qtys[$k]}}</td>
-                                    <td scope="row">{{$order->min_qty}}</td>
+                                    <td scope="row">{{$min_qtys[$k]}}</td>
                                 </tr>
                                 @php $k++; @endphp
                                 @endforeach
