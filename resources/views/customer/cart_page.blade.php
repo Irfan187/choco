@@ -167,13 +167,14 @@
                 
                 <div class="card-footer">
                        <div class=" d-flex flex-col-reverse float-right">
-                        <a href="/customer/suppliers" style="background:orange;color:white" class="btn mx-1 ">modifiy</a>
+                        <a href="/customer/supplierdetails/{{$sup->id}}" style="background:orange;color:white" class="btn mx-1 ">modifiy</a>
                         <button onclick="confirm({{$sup->id}})" style="background:green;color:white" class="btn mx-1 ">confrim</button>
 
                        </div>
                 </div>
                
             </div>
+           
             @endif
            
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -194,6 +195,7 @@
 
                                     },
                                     success: function(data){
+                                        console.log(data)
                                         Swal.fire({
                                             position: 'center',
                                             icon: 'success',

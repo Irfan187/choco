@@ -63,7 +63,17 @@
     <div style="margin-top:20px;"></div>
 
 @foreach($categories as $category)
-     <h3>&emsp; Category: {{$category->name}} </h3>
+                @php
+                 
+                 $products= App\Models\Product::where('supplier_id', $supplier->id)->where('category_id',$category->id)->with('unit')->get();
+
+                 @endphp
+    @if(count($products) > 0)
+    <center>
+    <img src="{{asset('/images/Category/'. $category->image)}}" alt="" height="120" width="120" style="border-radius:50%;margin-bottom:20px;">
+     <h3>&emsp;{{$category->name}} </h3>
+    </center>
+    
 
     <div class="table my-4 card">
         <div class="table-responsive">
@@ -82,14 +92,14 @@
                     </tr>
                 </thead>
                 <tbody id='table-body'>
-                    @php
-                 
-                    $products= App\Models\Product::where('supplier_id', $supplier->id)->where('category_id',$category->id)->with('unit')->get();
-
-                    @endphp
+                   
                 
                 @foreach($products as $product)
-              
+                @php
+                 
+                 $cartcheck= App\Models\Cart::where('customer_id', auth()->user()->id)->where('product_id',$product->id)->first();
+
+                 @endphp
           
                     <tr >
                         <th>{{ $loop->index+1 }}</th>
@@ -114,7 +124,7 @@
                             @endif
                            
                         </td>               
-                        @if(empty($c))
+                        @if(empty($cartcheck))
                         <td><button onclick="addtocart({{$product->id}})" id="addtocart{{$product->id}}" class="btn add-to-cart-btn">Add to cart</button></td>
                         @else
                         <td><button  id="addtocart{{$product->id}}" class="btn add-to-cart-btn"><i class="fa fa-check"></i> Added</button></td>
@@ -214,6 +224,7 @@
             @endforeach
             </div>
             </div>
+            @endif
             @endforeach
      
 
