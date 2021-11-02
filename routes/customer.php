@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Catalog\CustomerController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Catalog\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Models\Product;
@@ -17,16 +18,9 @@ Route::get('suppliers',[CustomerController::class,'getSupplier']);
 Route::get('/supplierdetails/{id}', function ($id) {
 
     $supplier = User::role('Supplier')->find($id);
-    $products = Product::where('supplier_id',$supplier->id)->get();
-    $categories = [];
-    foreach($products as $product){
-        $cat = Category::find($product->category_id);
-        if(!in_array($cat,$categories)){
-            array_push($categories,$cat);
-        }
-    }
+    $categories=Category::where('isActive',1)->get();
     
-    return view('customer.supplier_detail',compact('products','supplier','categories'));
+    return view('customer.supplier_detail',compact('supplier','categories'));
 })->name('supplierdetails');
 
 Route::get('/cart_page', function () {
@@ -45,6 +39,8 @@ Route::get('/myorders', function () {
 
 
 });
+
+// Route::get('product/category', [ProductController::class, 'productsByCategory'])->name('customer.product.category');
 
 Route::get('add_to_cart', [CartController::class, 'addToCart'])->name('add_to_cart');
 Route::post('confirm_order', [CartController::class, 'confirmOrder'])->name('confirm_order');

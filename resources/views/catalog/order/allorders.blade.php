@@ -130,7 +130,11 @@
                                 @php $k++; @endphp
                                 @endforeach
                             </tbody>
+                         
                         </table>
+                      <div id="radiobuttons">
+
+                      </div>
                     </div>
                     <div class="card-footer">
                         <div class="col-12">
@@ -143,9 +147,7 @@
                                         <option value="Shipped">Shipped</option>
                                         <option value="Pending">Pending</option>
                                         @elseif($order->status == "Shipped")
-                                        <option value="Confirmed" >Confirmed</option>
                                         <option value="Shipped" selected>Shipped</option>
-                                        <option value="Pending">Pending</option>
                                         @elseif($order->status == "Pending")
                                         <option value="Confirmed" >Confirmed</option>
                                         <option value="Shipped" >Shipped</option>
@@ -161,9 +163,63 @@
             </section>
 
             <script>
-                            $('#ord_status'+<?php echo $order->id;?>).on('change', function() {
-                                alert(<?php echo $order->id;?>)
+                function changeQty(value, order_id)
+                {    
+                    alert(order_id);
+                    $.ajax
+                                ({
+                                    "url" : "{{ route('quantity.update') }}",
+                                    "method" : "GET",
+                                    "data" : {
+                                       order_id:order_id,
+                                       req_min_qty:value 
+                                       
+                                    },
+                                    success: function(data)
+                                    {
+                                        console.log(data); 
+                                    }
+                                });  
+                }
+
+                       
+                $('#ord_status'+<?php echo $order->id;?>).on('change', function() {
+
+                                var status = $('#ord_status'+<?php echo $order->id;?>).val();
+                                if(status=='Shipped')
+                                {
+                                    document.getElementById("radiobuttons").innerHTML = 
+                                     '<input type="hidden" name="order_id" value="<?php echo $order->id;?>"><input type="radio" id="r_qty" name="shipped_with_min_qty" onclick="changeQty(this.value, <?php echo $order->id;?>)" value="0">'+
+                                      '<label for="r_qty">&emsp;Required quantity</label><br>'+
+                                      '<input type="radio" id="r_min_qty" name="shipped_with_min_qty" value="1" onclick="changeQty(this.value, <?php echo $order->id;?>)" >'+
+                                      '<label for="r_min_qty">&emsp;Required minimum quantity</label><br>';
+                                }
+                               
+                                $.ajax
+                                ({
+                                    "url" : "/order/status",
+                                    "method" : "GET",
+                                    "data" : {
+                                       order_id:<?php echo $order->id;?> ,
+                                       status:status
+                                    },
+                                    success: function(data)
+                                    {
+                                        console.log(data); 
+                                    }
+                                });  
+
+
                             });
+
+                         
+
+
+
+
+
+
+                           
             </script>
             @endforeach
            

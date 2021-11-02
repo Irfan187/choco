@@ -38,7 +38,9 @@ require __DIR__ . '/supplier.php';
 require __DIR__ . '/customer.php';
 // Catalog
     Route::middleware(['auth','role:Admin'])->group(function () {
-
+        Route::get('order/status', [App\Http\Controllers\OrderController::class, 'updateStatus'])->name('order.status');
+        Route::get('quantity/update', [App\Http\Controllers\OrderController::class, 'updateQuantity'])->name('quantity.update');
+    
     Route::get('broadcast/status', [BroadcastController::class, 'broadcast_status']);
     Route::resource('broadcast', BroadcastController::class);
     Route::get('broadcast/group/add/members', [BroadcastGroupController::class, 'add_members'])->name('addmembers');
@@ -95,6 +97,7 @@ require __DIR__ . '/customer.php';
 
 
 });
+
 
 
 });

@@ -6,7 +6,17 @@
 
             @foreach ($suppliers as $supplier)
             <div class="col-xl-4">
-            <a href="{{route('supplierdetails', $supplier->id)}}">    <div class="card m-b-20">
+                @php
+                $products=App\Models\Product::where('supplier_id',$supplier->id)->get();
+                @endphp
+                @if(count($products)<=0)
+                  <a href="#" onclick='alert("No product registered against this supplier");'>  
+                      
+                @else
+                <a href="{{route('supplierdetails', $supplier->id)}}">  
+                @endif
+   
+            <div class="card m-b-20">
                     <div class="card-header">
                         <center>
                         <h3 class="card-title text-center">{{$supplier->first_name}} {{$supplier->last_name}}</h3>
@@ -46,6 +56,7 @@
                         </div> -->
                     </div>
                 </div></a>
+
             </div>
             @endforeach
 

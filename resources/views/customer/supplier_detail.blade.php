@@ -12,6 +12,7 @@
         background:white;
     }
 </style>
+    
     <div class="container my-4">
 
         {{-- <div class="items">
@@ -54,31 +55,19 @@
         </div> --}}
         <section>
             
-                <h2>{{ $supplier->first_name }} {{ $supplier->last_name }}</h2>
+                <h2>Supplier: {{ $supplier->first_name }} {{ $supplier->last_name }}</h2>
             
         </section>
-        <section class="items slider">
-            @foreach($categories as $category)
-            <div class="slide text-center">
-                <a href="">
-                    <img src="{{ asset('/images/Category/'. $category->image) }}" style="" class="avatar avatar-lgg">
-
-                </a>
-                <center>
-                <h5 style="margin-top:30px">{{$category->name}}</h5>
-                </center>
-            </div>
-            @endforeach
-            
-           
-            
-
-        </section>
+     
     </div>
+    <div style="margin-top:20px;"></div>
+
+@foreach($categories as $category)
+     <h3>&emsp; Category: {{$category->name}} </h3>
 
     <div class="table my-4 card">
         <div class="table-responsive">
-            <table class="table table-bordered border-top mb-0" style="background:white;">
+            <table class="table table-bordered border-top mb-0" style="background:white;" id="my-table">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -92,18 +81,20 @@
 
                     </tr>
                 </thead>
-                <tbody>
-                @php $i = 1; @endphp
+                <tbody id='table-body'>
+                    @php
+                 
+                    $products= App\Models\Product::where('supplier_id', $supplier->id)->where('category_id',$category->id)->with('unit')->get();
+
+                    @endphp
+                
                 @foreach($products as $product)
-                @php $unit = App\Models\Unit::find($product->unit_id);
               
-                    $c = App\Models\Cart::where('product_id',$product->id)->where('customer_id',auth()->user()->id)->first();
-                @endphp
-                    
-                    <tr>
-                        <th>{{ $i++ }}</th>
+          
+                    <tr >
+                        <th>{{ $loop->index+1 }}</th>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $unit->name }}</td>
+                        <td>{{ $product->unit->name }}</td>
                         <td><input id="price{{$product->id}}" type="number" style="width:40px" value="{{ $product->price }}" min="1" readonly> €</td>
                         <td>{{ $product->quantity }}</td>
                         <td><input id="total{{$product->id}}" type="number" style="width:40px" value="{{ $product->price }}" min="1" readonly>€</td>
@@ -122,11 +113,7 @@
                             </div>
                             @endif
                            
-                        </td>
-                        
-                        
-                        
-                       
+                        </td>               
                         @if(empty($c))
                         <td><button onclick="addtocart({{$product->id}})" id="addtocart{{$product->id}}" class="btn add-to-cart-btn">Add to cart</button></td>
                         @else
@@ -168,16 +155,18 @@
 
                             }
 
-                            $('#min_qty'+<?php echo $product->id?>).change(function () {
+                            $('#min_qty'+<?php echo $product->id;?>).change(function () {
                                 if(this.checked) {
                                     console.log(id)
-                                    document.getElementById("showqty"+<?php echo $product->id?>).style.display = "block";
+                                    document.getElementById("showqty"+<?php echo $product->id;?>).style.display = "block";
                                 }else{
                                     console.log(id+ " hi")
-                                    document.getElementById("showqty"+<?php echo $product->id?>).style.display = "none";
+                                    document.getElementById("showqty"+<?php echo $product->id;?>).style.display = "none";
                                 }
                             
                             });
+
+                         
 
                             function addtocart(id){
 
@@ -214,15 +203,21 @@
                                 
                             }
                             
+
+                           
                             
                             
                         </script>
-                @endforeach
+                
                 </tbody>
             </table>
-        </div>
+            @endforeach
+            </div>
+            </div>
+            @endforeach
+     
 
-    </div>
+   
 
 
     
