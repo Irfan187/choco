@@ -96,11 +96,14 @@ require __DIR__ . '/customer.php';
     return view('catalog.order.allorders',compact('orders'));
 
 
+
+
 });
 
 
 
 });
+Route::get('getproducts', [ProductController::class, 'getProducts'])->name('getproducts');
 
     //API route
 Route::get('credentials',[CustomerController::class,'login']);

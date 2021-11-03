@@ -50,7 +50,7 @@
                     </td> --}}
                     <td>
                         <div class="row">
-                        <div class="col-sm-3"> 
+                        <div class="col-sm-4"> 
                         <a type="button" data-toggle="modal" data-target="#Show{{ $supplier->id }}"><span
                                 class="label label-pill label-success mt-2" style="font-size:11px;"><i class="fa fa-eye"></i> view</span>
                         </a>
@@ -60,13 +60,13 @@
                                  <a href="{{ route('supplier.edit',$supplier->id) }}" class="btn btn-primary btn-sm"><i
                                   class="fa fa-edit text-white"></i></a>
                             </div>
-                             <div class="col-sm-3">
+                             <!-- <div class="col-sm-3">
                                     <form action="{{ route('supplier.destroy',$supplier->id) }}" method="POST" enctype="multipart/form-data"> 
                                         @csrf
                                         @method('DELETE') 
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash text-white"></i></button>
                                     </form>
-                            </div>
+                            </div> -->
                         </div>
                     </td>
                 </tr>

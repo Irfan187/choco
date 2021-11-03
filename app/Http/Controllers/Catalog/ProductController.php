@@ -17,6 +17,7 @@ use Spatie\Permission\Models\Role;
 use App\Models\Order;
 use App\Models\Cart;
 
+
 class ProductController extends Controller
 {
     protected $crud_repository;
@@ -40,10 +41,12 @@ class ProductController extends Controller
         // $view = $this->view;
         // return view('mycomponent.datatable', compact('products', 'view'));
         $products = app('App\\Models\\' . $this->model)->all();
+        $cats = Category::all();
+
         
         // $inventories = Inventory::with('product')->get();
         $view = $this->view;
-        return view('mycomponent.datatable',compact('products','view'));
+        return view('mycomponent.datatable',compact('products','view','cats'));
     }
 
     /**
@@ -185,6 +188,16 @@ class ProductController extends Controller
           return view('mycomponent.datatable',compact('products','view','inventories'));
         else
         return view('mycomponent.datatable',compact('products','view','inventories'));
+    }
+
+
+
+    public function getProducts(Request $request)
+    {
+        $products = app('App\\Models\\' . $this->model)::where('category_id',$request->id)->get();
+        $category = Category::find($request->id);
+        // dd($products);
+        return response()->json($products);
     }
 
 }

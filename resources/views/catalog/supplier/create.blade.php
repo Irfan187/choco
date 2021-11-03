@@ -40,18 +40,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="name">Mobile Number </label>
-                        <input type="text" class="form-control" name="mobilenumber" id="name" required
+                        <label class="form-label" for="name">Phone </label>
+                        <input type="text" class="form-control" name="mobilenumber" id="name"
                             value="{{ isset($supplier)?$supplier->mobilenumber:''}}" placeholder=" Enter Mobile Number">
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="name">Address </label>
-                        <input type="text" class="form-control" name="address" id="name"  required
+                        <input type="text" class="form-control" name="address" id="name"  
                             value="{{ isset($supplier)?$supplier->address:''}}" placeholder=" Enter Address">
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label" for="name">Fax Number</label>
+                        <label class="form-label" for="name">Tax Number</label>
                         <input type="text" class="form-control" name="fax_number" id="name" 
                             value="{{ isset($supplier)?$supplier->fax_number:''}}" placeholder=" Enter Fax Number">
                     </div>

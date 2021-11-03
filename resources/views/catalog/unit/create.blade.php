@@ -30,7 +30,7 @@
                     <div class="form-group">
                         <label class="form-label" for="abbreviation">abbreviation</label>
                         <input type="text" class="form-control" name="abbreviation" id="abbreviation"
-                            value="{{ isset($unit)?$unit->abbreviation:''}}" placeholder=" Enter Abbreviation">
+                            value="{{ isset($unit)?$unit->abbreviation:''}}" placeholder=" Enter Abbreviation" required>
                     </div>
 
 

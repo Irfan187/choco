@@ -25,7 +25,17 @@
         </div>
     </div>
 </div>
-
+<div class="row" style="margin-top:20px;margin-bottom:20px;">
+    <div class="col-lg-8"></div>
+    <div class="col-lg-3">
+        <select name="cats" id="cat" class="form-control">
+            @foreach($cats as $cat)
+                <option value="{{$cat->id}}">{{$cat->name}}</option>
+            @endforeach
+        </select>
+    </div>
+    
+</div>
 <div class="card-body">
     <div class="table-responsive">
         @include('message')
@@ -171,13 +181,13 @@
                 </tr>
             </thead>
             <tbody>
-            <div  id="product-table">
+            <!-- <div  id=""> -->
                
                 @foreach ($products as $product)
                 <tr>
                     <td style=' border: 1px solid black;'><img src="{{ asset('images/Product/'.$product->image) }}" style="height: 80px; width:150px" alt="">
                     </td> 
-                    <td style=' border: 1px solid black;'>{{ $product->name }}</td>
+                    <td  style=' border: 1px solid black;'>{{ $product->name }}</td>
                     <td style=' border: 1px solid black;'>{{ $product->price }}</td>
                     <td style=' border: 1px solid black;'>{{ $product->quantity }}</td>
 
@@ -191,7 +201,7 @@
                 
              
                 @endforeach
-                </div>
+                <!-- </div> -->
             </tbody>
         </table>
     </div>
@@ -241,6 +251,50 @@ printpage.focus();
 
 // }
 
+
+$('select').on('change', function() {
+  var id = this.value;
+
+  $.ajax({
+            type:'GET',
+            url: "{{route('getproducts')}}",
+            data:{
+               id : id
+            },
+            success:function(data) {
+               
+            var all_data = "";
+            
+            $('tbody').empty();
+
+            data.forEach(function(value) 
+            {
+                var img = 'http://localhost:8000/images/Product/'+value.image;
+               all_data +=
+                    '<tr><td style=""><img src="'+img+'" style="height: 80px; width:150px" alt="">'
+                    +'</td>'+
+                    '<td style="">'+ value.name +'</td>'+
+                    '<td style="">'+value.price+'</td>';
+                    if(value.isActive == 0){
+                        all_data+='<td> <span class="label label-pill label-danger" style="">In Active</span></td>';
+                    }else{
+                        all_data+='<td> <span class="label label-pill label-success" style="">Actice</span></td>';
+                    }
+                    
+
+            
+
+                    all_data+='<td style=""><div class="row"><div class="col-sm-3"><a type="button" data-toggle="modal" data-target="#Show'+value.id+'"><span class="label label-pill label-success mt-2" style="font-size:11px;"><i class="fa fa-eye"></i> view</span></a></td></tr>'
+                ;
+            });
+
+            $('tbody').append(all_data);
+            // $('tbody').css('display','table');
+
+            console.log(all_data)
+            }
+        });
+});
 
 </script>
 </div>
