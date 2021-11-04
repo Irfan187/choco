@@ -105,6 +105,12 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="form-label" for="price">Index</label>
+                        <input type="number" class="form-control" min="1" name="index" id="index" required
+                            value="{{ isset($product)?$product->index:''}}" placeholder=" Enter Index ">
+                    </div>
+
+                    <div class="form-group">
                         <label class="form-label" for="name_en">Required Minimum Quantity</label>
                         <select name="min_req_qty" id="min_req_qty" class="form-control" required>
                             @empty($product)

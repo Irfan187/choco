@@ -46,6 +46,7 @@
                     <th class="wd-15p">Name </th>
                     <th class="wd-15p">Price (€)</th>
                     <th class="wd-10p">Status</th>
+                    <th class="wd-10p">Index</th>
                     <th class="wd-10p">Action</th>
 
                    
@@ -73,6 +74,9 @@
                                 class="label label-pill label-{{ $product->isActive == 1?'success':'danger' }} mt-2" style="font-size:11px;">{{ $product->isActive == 1? trans('message.isActive.active'):trans('message.isActive.inactive') }}</span>
                         </a>
                     </td>
+                    <td>
+                            <span class="badge badge-success">{{$product->index}}</span>
+                        </td> 
                     <td>
                         <div class="row">
                         <div class="col-sm-3"> 
@@ -284,7 +288,7 @@ $('select').on('change', function() {
 
             
 
-                    all_data+='<td style=""><div class="row"><div class="col-sm-3"><a type="button" data-toggle="modal" data-target="#Show'+value.id+'"><span class="label label-pill label-success mt-2" style="font-size:11px;"><i class="fa fa-eye"></i> view</span></a></td></tr>'
+                    all_data+='<td><span class="badge badge-success">'+value.index+'</span></td> <td style=""><div class="row"><div class="col-sm-3"><a type="button" data-toggle="modal" data-target="#Show'+value.id+'"><span class="label label-pill label-success mt-2" style="font-size:11px;"><i class="fa fa-eye"></i> view</span></a></td></tr>'
                 ;
             });
 

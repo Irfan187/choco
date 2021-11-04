@@ -40,7 +40,7 @@ class ProductController extends Controller
 
         // $view = $this->view;
         // return view('mycomponent.datatable', compact('products', 'view'));
-        $products = app('App\\Models\\' . $this->model)->all();
+        $products = app('App\\Models\\' . $this->model)->orderby('index','asc')->get();
         $cats = Category::all();
 
         
@@ -76,6 +76,7 @@ class ProductController extends Controller
 
         $request->validate([
             'description' => 'required',
+            'index' => 'required|unique:products'
         ]);
 
          $message = $this->crud_repository->storeWithSingleImage($request, $this->model);
@@ -194,7 +195,7 @@ class ProductController extends Controller
 
     public function getProducts(Request $request)
     {
-        $products = app('App\\Models\\' . $this->model)::where('category_id',$request->id)->get();
+        $products = app('App\\Models\\' . $this->model)::where('category_id',$request->id)->orderby('index','asc')->get();
         $category = Category::find($request->id);
         // dd($products);
         return response()->json($products);

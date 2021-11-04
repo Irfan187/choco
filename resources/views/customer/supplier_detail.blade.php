@@ -65,7 +65,7 @@
 @foreach($categories as $category)
                 @php
                  
-                 $products= App\Models\Product::where('supplier_id', $supplier->id)->where('category_id',$category->id)->with('unit')->get();
+                 $products= App\Models\Product::where('supplier_id', $supplier->id)->where('category_id',$category->id)->with('unit')->orderby('index','asc')->get();
 
                  @endphp
     @if(count($products) > 0)
@@ -87,6 +87,8 @@
                         <th>Available Quantity</th>
                         <th>Total</th>
                         <th>Required Quantity</th>
+                        <th>Index</th>
+
                         <th>Action</th>
 
                     </tr>
@@ -123,6 +125,9 @@
                             </div>
                             @endif
                            
+                        </td>
+                        <td>
+                            <span class="badge badge-success">{{$product->index}}</span>
                         </td>               
                         @if(empty($cartcheck))
                         <td><button onclick="addtocart({{$product->id}})" id="addtocart{{$product->id}}" class="btn add-to-cart-btn">Add to cart</button></td>
@@ -218,10 +223,10 @@
                             
                             
                         </script>
-                
+                @endforeach
                 </tbody>
             </table>
-            @endforeach
+            
             </div>
             </div>
             @endif
