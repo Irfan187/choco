@@ -87,7 +87,7 @@
                         <th>Available Quantity</th>
                         <th>Total</th>
                         <th>Required Quantity</th>
-                        <th>Index</th>
+                        <th>Order</th>
 
                         <th>Action</th>
 

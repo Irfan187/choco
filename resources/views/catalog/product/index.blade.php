@@ -9,7 +9,7 @@
 </div> -->
            
  <div class="card-header">
-    <div class="card-title">{{ $view}}</div>
+    <div class="card-title">Products</div>
     <div class="col-md-12">
         <div class="row pull-right">
         <div class="col-sm-4 " >
@@ -46,7 +46,7 @@
                     <th class="wd-15p">Name </th>
                     <th class="wd-15p">Price (€)</th>
                     <th class="wd-10p">Status</th>
-                    <th class="wd-10p">Index</th>
+                    <th class="wd-10p">Order</th>
                     <th class="wd-10p">Action</th>
 
                    

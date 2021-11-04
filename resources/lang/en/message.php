@@ -8,6 +8,6 @@ return [
 
     'isActive' => [
         'active' => 'Active',
-        'inactive' => 'In Active',
+        'inactive' => 'Disable',
     ]
 ];

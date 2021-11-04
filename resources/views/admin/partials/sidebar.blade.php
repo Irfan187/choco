@@ -36,17 +36,17 @@
     {{-- <ul class="slide-menu">--}}
     <ul class="p-5">
         @role('Admin')
-        <li><a class="slide-item" href="{{ route('product.index') }}">Product</a></li>
-        <li><a class="slide-item" href="{{ route('category.index') }}">Category</a></li>
+        <li><a class="slide-item" href="{{ route('product.index') }}">Products</a></li>
+        <li><a class="slide-item" href="{{ route('category.index') }}">Categories</a></li>
         <li><a class="slide-item" href="{{url('allorders')}}">Orders</a></li>
 
-        <li><a class="slide-item" href="{{ route('unit.index') }}">Unit</a></li>
+        <li><a class="slide-item" href="{{ route('unit.index') }}">Units</a></li>
         <!-- <li><a class="slide-item" href="{{ route('inventory.index') }}">Inventory</a></li> -->
-        <li><a class="slide-item" href="{{ route('customer.index') }}">Customer</a></li>
+        <li><a class="slide-item" href="{{ route('customer.index') }}">Customers</a></li>
         <!-- <li><a class="slide-item" href="{{ route('broadcast.index') }}">Broadcast Email</a></li>
         <li><a class="slide-item" href="{{ route('broadcast_group.index') }}">Email Group</a></li> -->
-        <li><a class="slide-item" href="{{ route('manufacturing_partner.index') }}">Manufacturer</a></li>
-        <li><a class="slide-item" href="{{ route('supplier.index') }}">Supplier</a></li>
+        <li><a class="slide-item" href="{{ route('manufacturing_partner.index') }}">Manufacturers</a></li>
+        <li><a class="slide-item" href="{{ route('supplier.index') }}">Suppliers</a></li>
         @endrole
 
         @role('Customer')

@@ -7,7 +7,7 @@
 </div> -->
 
 <div class="card-header">
-    <div class="card-title">{{ $view}}</div>
+    <div class="card-title">Customers</div>
     <div class="col-md-12">
       
         <div class="row pull-right">

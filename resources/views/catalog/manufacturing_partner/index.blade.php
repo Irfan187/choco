@@ -9,7 +9,7 @@
 
 
 <div class="card-header">
-    <div class="card-title">Manufacturer</div>
+    <div class="card-title">Manufacturers</div>
     <div class="col-md-11">
         <div class="text-right mr-5">
             <a href="{{ route($view.'.create') }}" class="btn btn-primary text-white mr-5"><i class="fa fa-plus"></i>
