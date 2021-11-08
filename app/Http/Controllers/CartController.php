@@ -33,6 +33,8 @@ class CartController extends Controller
     
                 'unit' => $unit->name,
                 'qty1' => $request->qty1,
+                'catid' => $request->catid,
+
             ];
     
             // session()->put('all_cart_data',[]);
@@ -99,6 +101,8 @@ class CartController extends Controller
                     $cart->total = $data[0]['total'];
                     $cart->unit = $data[0]['unit'];
                     $cart->min_qty = $data[0]['qty1'];
+                    $cart->category_id = $data[0]['catid'];
+
     
                     $cart->save();
                 }

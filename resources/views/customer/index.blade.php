@@ -9,10 +9,14 @@
             <div class="col-xl-4">
                 @php
                 $products=App\Models\Product::where('supplier_id',$supplier->id)->get();
+                $cartcheck2= App\Models\Order::where('customer_id', auth()->user()->id)->where('supplier_id',$supplier->id)
+                ->where('status','Not Confirmed')
+                ->first();
                 @endphp
-                @if(count($products)<=0)
+                @if(count($products) <= 0)
                   <a href="#" onclick='alert("No product registered against this supplier");'>  
-                      
+                @elseif(!empty($cartcheck2))
+                <a href="#" onclick='alert("You have already a Not Confirmed Order for this supplier");'>  
                 @else
                 <a href="{{route('supplierdetails', $supplier->id)}}">  
                 @endif

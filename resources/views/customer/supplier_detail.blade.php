@@ -99,10 +99,7 @@
                 @foreach($products as $product)
                 @php
                 $cartcheck= App\Models\Cart::where('customer_id', auth()->user()->id)->where('product_id',$product->id)->first();
-                
-
-
-                
+                              
 
                  @endphp
           
@@ -132,9 +129,9 @@
                         </td>
                         <td>
                             @if(!empty($cartcheck))
-                            <input type="checkbox" name="checked[]" id="checked{{$product->id}}" value="{{$product->id}}" onclick="sessionaddtocart({{$product->id}})" checked>
+                            <input type="checkbox" name="checked[]" id="checked{{$product->id}}" value="{{$product->id}}" onclick="sessionaddtocart({{$product->id}},{{$category->id}})" checked>
                             @else
-                            <input type="checkbox" name="checked[]" id="checked{{$product->id}}" value="{{$product->id}}" onclick="sessionaddtocart({{$product->id}})">
+                            <input type="checkbox" name="checked[]" id="checked{{$product->id}}" value="{{$product->id}}" onclick="sessionaddtocart({{$product->id}},{{$category->id}})">
                             @endif
                         </td>               
                         
@@ -142,6 +139,7 @@
                     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                     <script>
                             var id = <?php echo $product->id; ?>;
+                            var catid = <?php echo $category->id; ?>;
                             var sup_id = <?php echo $supplier->id; ?>;
                             
 
@@ -175,7 +173,8 @@
                             });
 
 
-                            function sessionaddtocart(id){
+                            function sessionaddtocart(id,cat_id){
+                                // alert(catid)
                                 var total = $('#total'+id).val();
                                 var qty = $('#qty'+id).val();
                                 var qty1 = $('#qty1'+id).val();
@@ -199,7 +198,8 @@
                                         total:total,
                                         qty:qty,
                                         qty1:qty1,
-                                        checked:checked
+                                        checked:checked,
+                                        catid:cat_id,
                                     },
                                     
                                         
@@ -219,7 +219,8 @@
                         </script>
                 @endforeach
                 </tbody>
-                @php $cartcheck2= App\Models\Cart::where('customer_id', auth()->user()->id)->where('supplier_id',$supplier->id)->get(); @endphp
+                @php $cartcheck2= App\Models\Cart::where('customer_id', auth()->user()->id)->where('supplier_id',$supplier->id)
+                ->where('category_id',$category->id)->get(); @endphp
 
                 <tfoot>
                     <tr>
