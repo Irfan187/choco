@@ -57,7 +57,7 @@ class ProductController extends Controller
     public function create()
     {
         $suppliers=User::role('Supplier')->where('isActive',1)->get();
-        $units=Unit::where('isActive',1)->get();
+        $units=Unit::all();
         $manufacturers=User::role('Manufacturer')->where('isActive',1)->get();
 
         $categories = Category::IsActive()->get();

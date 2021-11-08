@@ -27,7 +27,7 @@
                     <th class="wd-15p">Name</th>
                     <th class="wd-10p">Symbol</th>
                     <th class="wd-10p">Abbreviation</th>
-                    <th class="wd-10p">Status</th>
+                    <!-- <th class="wd-10p">Status</th> -->
                     <th class="wd-10p">Action</th>
 
                 </tr>
@@ -48,24 +48,26 @@
                     <td> -- </td>
                     @endif
                     
-                        <td>
+                        <!-- <td>
                      <a href="{{ route('unit.status',$unit->id) }}"><span
                                 class="label label-pill label-{{ $unit->isActive == 1?'success':'danger' }} mt-2" style="font-size:11px;">{{ $unit->isActive == 1? trans('message.isActive.active'):trans('message.isActive.inactive') }}</span>
                         </a>  
-                    </td>
+                    </td> -->
                     <td>
                         <div class="row">
                            <div class="col-sm-3">
                             <a href="{{ route('unit.edit',$unit->id) }}" class="btn btn-primary btn-sm"><i
                                 class="fa fa-edit text-white"></i></a>
                             </div>
-                              <!-- <div class="col-sm-2">
+                            @if(!in_array($unit->id,$un_arr))
+                              <div class="col-sm-2">
                                     <form action="{{ route('unit.destroy',$unit->id) }}" method="POST" enctype="multipart/form-data"> 
                                         @csrf
                                         @method('DELETE') 
                                         <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash text-white"></i></button>
                                     </form>
-                                </div> -->
+                                </div>
+                            @endif
                         </div>
                                 
                     </td>

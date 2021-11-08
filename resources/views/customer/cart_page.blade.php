@@ -170,7 +170,7 @@
                 <div class="card-footer">
                        <div class=" d-flex flex-col-reverse float-right">
                         <a href="/customer/supplierdetails/{{$sup->id}}" style="background:orange;color:white" class="btn mx-1 ">modifiy</a>
-                        <button onclick="confirm({{$sup->id}})" style="background:green;color:white" class="btn mx-1 ">confrim</button>
+                        <button onclick="confirm({{$sup->id}})" style="background:green;color:white" class="btn mx-1 ">Place Order</button>
 
                        </div>
                 </div>

@@ -5,6 +5,7 @@
         <div class="row">
 
             @foreach ($suppliers as $supplier)
+            @if($supplier->isActive == 1)
             <div class="col-xl-4">
                 @php
                 $products=App\Models\Product::where('supplier_id',$supplier->id)->get();
@@ -58,6 +59,7 @@
                 </div></a>
 
             </div>
+            @endif
             @endforeach
 
         </div>

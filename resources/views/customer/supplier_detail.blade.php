@@ -2,8 +2,8 @@
 @section('content')
 <style>
     input{
-        background: white;
-        border:none;
+        /* background: white;
+        border:none; */
     }
     .card{
         background: white;
@@ -60,6 +60,7 @@
         </section>
      
     </div>
+    @csrf
     <div style="margin-top:20px;"></div>
 
 @foreach($categories as $category)
@@ -80,47 +81,47 @@
             <table class="table table-bordered border-top mb-0" style="background:white;" id="my-table">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th width="40px">#</th>
                         <th>Name</th>
                         <th>Unit</th>
-                        <th>Price/unit</th>
+                        <th>Price/unit (€)</th>
                         <th>Available Quantity</th>
-                        <th>Total</th>
+                        <th>Total (€)</th>
                         <th>Required Quantity</th>
                         <th>Order</th>
 
-                        <th>Action</th>
+                        <th>Select Product</th>
 
                     </tr>
                 </thead>
                 <tbody id='table-body'>
                    
-                
                 @foreach($products as $product)
                 @php
-                 
-                 $cartcheck= App\Models\Cart::where('customer_id', auth()->user()->id)->where('product_id',$product->id)->first();
+                $cartcheck= App\Models\Cart::where('customer_id', auth()->user()->id)->where('product_id',$product->id)->first();
+                
+
+
+                
 
                  @endphp
           
                     <tr >
-                        <th>{{ $loop->index+1 }}</th>
+                        <th width="40px">{{ $loop->index+1 }}</th>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->unit->name }}</td>
-                        <td><input id="price{{$product->id}}" type="number" style="width:40px" value="{{ $product->price }}" min="1" readonly> €</td>
+                        <td><input id="price{{$product->id}}" type="number" style="width:90px" value="{{ $product->price }}" min="1"> </td>
                         <td>{{ $product->quantity }}</td>
-                        <td><input id="total{{$product->id}}" type="number" style="width:40px" value="{{ $product->price }}" min="1" readonly>€</td>
+                        <td><input id="total{{$product->id}}" type="number" style="width:90px"  value="{{ $product->price }}" min="1"></td>
                         <td>
                            
-                            <input id="qty{{$product->id}}" type="number" style="width:40px" value="1" min="1" readonly>
-                            <button class="plus" onclick="increment({{$product->id}})"><b>+</b></button>
-                            <button class="minus" onclick="decrement({{$product->id}})"><b>-</b></button><br><br>
+                        <input id="qty{{$product->id}}" type="number" style="width:40px"  value="1" min="1"><br><br>
+                            
                             @if($product->min_req_qty == 1)
-                             <input type="checkbox" id="min_qty{{$product->id}}" name="min_qty"> Min Quantity<br><br>
+                             <input type="checkbox" id="min_qty{{$product->id}}" style="width:40px" name="min_qty"> Min Quantity<br><br>
                             <div id="showqty{{$product->id}}" style="display:none">
-                                <input id="qty1{{$product->id}}" type="number" size="5" style="width:40px;" value="0" min="0" readonly>
-                                <button class="plus" onclick="increment1({{$product->id}})"><b>+</b></button>
-                                <button class="minus" onclick="decrement1({{$product->id}})"><b>-</b></button>
+                                <input id="qty1{{$product->id}}" type="number" size="5" style="width:40px;" value="0" min="0">
+                                
                                
                             </div>
                             @endif
@@ -128,13 +129,15 @@
                         </td>
                         <td>
                             <span class="badge badge-success">{{$product->index}}</span>
+                        </td>
+                        <td>
+                            @if(!empty($cartcheck))
+                            <input type="checkbox" name="checked[]" id="checked{{$product->id}}" value="{{$product->id}}" onclick="sessionaddtocart({{$product->id}})" checked>
+                            @else
+                            <input type="checkbox" name="checked[]" id="checked{{$product->id}}" value="{{$product->id}}" onclick="sessionaddtocart({{$product->id}})">
+                            @endif
                         </td>               
-                        @if(empty($cartcheck))
-                        <td><button onclick="addtocart({{$product->id}})" id="addtocart{{$product->id}}" class="btn add-to-cart-btn">Add to cart</button></td>
-                        @else
-                        <td><button  id="addtocart{{$product->id}}" class="btn add-to-cart-btn"><i class="fa fa-check"></i> Added</button></td>
-
-                        @endif
+                        
                     </tr>
                     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                     <script>
@@ -142,33 +145,23 @@
                             var sup_id = <?php echo $supplier->id; ?>;
                             
 
-
-                            function increment(id) {
-                                document.getElementById('qty'+id).stepUp();
+                            $('#qty'+id).keyup(function(){
                                 var a = document.getElementById('qty'+id).value;
                                 var b = document.getElementById('price'+id).value;
                                 var c = parseInt(a) * parseInt(b);
                                 console.log(a + "  " +b + " " + c);
                                 $('#total'+id).val(c);
+                            });
 
-                            }
-                            function decrement(id) {
-                                document.getElementById('qty'+id).stepDown();
+                            $('#qty'+id).keydown(function(){
                                 var a = document.getElementById('qty'+id).value;
                                 var b = document.getElementById('price'+id).value;
-                                var c = a * b;
+                                var c = parseInt(a) * parseInt(b);
+                                console.log(a + "  " +b + " " + c);
                                 $('#total'+id).val(c);
-
-                            }
-
-                            function increment1(id) {
-                                document.getElementById('qty1'+id).stepUp();
-
-                            }
-                            function decrement1(id) {
-                                document.getElementById('qty1'+id).stepDown();
-
-                            }
+                            });
+                            
+                            
 
                             $('#min_qty'+<?php echo $product->id;?>).change(function () {
                                 if(this.checked) {
@@ -181,17 +174,22 @@
                             
                             });
 
-                         
 
-                            function addtocart(id){
-
+                            function sessionaddtocart(id){
                                 var total = $('#total'+id).val();
                                 var qty = $('#qty'+id).val();
                                 var qty1 = $('#qty1'+id).val();
 
+                                var checked = "";
+
+                                if($("#checked"+id).prop('checked') == true){
+                                    checked = "1";
+                                }else{
+                                    checked = "0";
+                                }
 
                                 $.ajax({
-                                    "url" : "{{ route('add_to_cart') }}",
+                                    "url" : "{{ route('session_add_to_cart') }}",
                                     "method" : "GET",
                                     "type" : "json",
                                     "data" : {
@@ -200,23 +198,18 @@
                                         total:total,
                                         qty:qty,
                                         qty1:qty1,
+                                        checked:checked
                                     },
-                                    success: function(data){
-                                        Swal.fire({
-                                            position: 'center',
-                                            icon: 'success',
-                                            title: 'Item added to cart successfully',
-                                            showConfirmButton: false,
-                                            timer: 1500
-                                        });
-
-                                        location.reload();
+                                    
                                         
-                                    }
+                                    
                                 });
-
                                 
                             }
+
+                         
+
+                            
                             
 
                            
@@ -225,6 +218,17 @@
                         </script>
                 @endforeach
                 </tbody>
+                @php $cartcheck2= App\Models\Cart::where('customer_id', auth()->user()->id)->where('supplier_id',$supplier->id)->get(); @endphp
+
+                <tfoot>
+                    <tr>
+                        @if(count($cartcheck2) > 0)
+                        <td><a href="{{route('add_to_cart')}}" style="background:#ec607f;color:white" id="addtocart" class="btn add-to-cart-btn">Update cart</button></td>
+                        @else
+                        <td><a href="{{route('add_to_cart')}}" style="background:#ec607f;color:white" id="addtocart" class="btn add-to-cart-btn">Add to cart</button></td>
+                        @endif
+                    </tr>
+                </tfoot>
             </table>
             
             </div>
@@ -232,8 +236,8 @@
             @endif
             @endforeach
      
+           
 
-   
 
 
     

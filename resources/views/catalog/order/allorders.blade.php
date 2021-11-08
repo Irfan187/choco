@@ -127,6 +127,7 @@
                                     <td scope="row">{{ $prod->price }} €</td>
 
                                     <td scope="row">{{$qtys[$k]}}</td>
+                                   
                                     <td scope="row">{{$min_qtys[$k]}}</td>
                                 </tr>
                                 @php $k++; @endphp
@@ -144,16 +145,26 @@
                                 <div class="col-10 float-left"></div>
                                 <div class="col-2 float-right text-right">
                                     <select name="ord_status" id="ord_status{{$order->id}}" class="form-control" >
-                                        @if($order->status == "Confirmed")
-                                        <option value="Confirmed" selected>Confirmed</option>
-                                        <option value="Shipped">Shipped</option>
-                                        <option value="Pending">Pending</option>
-                                        @elseif($order->status == "Shipped")
-                                        <option value="Shipped" selected>Shipped</option>
-                                        @elseif($order->status == "Pending")
+                                        @if($order->status == "Not Confirmed")
+                                        <option value="Not Confirmed" selected>Not Confirmed</option>
                                         <option value="Confirmed" >Confirmed</option>
-                                        <option value="Shipped" >Shipped</option>
-                                        <option value="Pending" selected>Pending</option>
+                                        <option value="Delivered">Delivered</option>
+                                        <option value="In Delivery" >In Delivery</option>
+                                        @elseif($order->status == "Delivered")
+                                        <option value="Not Confirmed" >Not Confirmed</option>
+                                        <option value="Confirmed" >Confirmed</option>
+                                        <option value="In Delivery" >In Delivery</option>
+                                        <option value="Delivered" selected>Delivered</option>
+                                        @elseif($order->status == "In Delivery")
+                                        <option value="Not Confirmed" >Not Confirmed</option>
+                                        <option value="Confirmed" >Confirmed</option>
+                                        <option value="In Delivery" selected>In Delivery</option>
+                                        <option value="Delivered">Delivered</option>
+                                        @elseif($order->status == "Confirmed")
+                                        <option value="Not Confirmed" >Not Confirmed</option>
+                                        <option value="Confirmed" selected>Confirmed</option>
+                                        <option value="In Delivery">In Delivery</option>
+                                        <option value="Delivered" >Delivered</option>
                                         @endif
                                     </select>
                                     

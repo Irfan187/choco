@@ -32,7 +32,18 @@
                             <option disabled selected value="">-- Select --</option>
                             @endempty
                             @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @if(isset($product))
+                                @if($product->category_id == $category->id)
+                                    <option value="{{  $category->id }}" selected>{{ $category->name }} </option>
+                                @else
+                                    <option value="{{  $category->id }}">{{ $category->name }} </option>
+                                @endif
+                                
+                            
+                            @else
+                            <option value="{{  $category->id }}">{{ $category->name }} </option>
+
+                            @endif
                             @endforeach
                         </select>
                     </div>
@@ -49,7 +60,18 @@
                             <option disabled selected value="">-- Select --</option>
                             @endempty
                             @foreach ($manufacturers as $manufacturer)
-                            <option value="{{  $manufacturer->id }}">{{ $manufacturer->first_name  }}</option>
+                            @if(isset($product))
+                                @if($product->manufacturing_partner_id == $manufacturer->id)
+                                    <option value="{{  $manufacturer->id }}" selected>{{ $manufacturer->first_name }} </option>
+                                @else
+                                    <option value="{{  $manufacturer->id }}">{{ $manufacturer->first_name }} </option>
+                                @endif
+                                
+                            
+                            @else
+                            <option value="{{  $manufacturer->id }}">{{ $manufacturer->first_name }} </option>
+
+                            @endif
                             @endforeach
                         </select>
                     </div>
@@ -62,7 +84,18 @@
                             @endempty
                             
                             @foreach ($suppliers as $supplier)
-                            <option value="{{  $supplier->id }}">{{ $supplier->first_name }}  {{ $supplier->last_name }}  </option>
+                            @if(isset($product))
+                                @if($product->supplier_id == $supplier->id)
+                                    <option value="{{  $supplier->id }}" selected>{{ $supplier->first_name }} </option>
+                                @else
+                                    <option value="{{  $supplier->id }}">{{ $supplier->first_name }} </option>
+                                @endif
+                                
+                            
+                            @else
+                            <option value="{{  $supplier->id }}">{{ $supplier->first_name }} </option>
+
+                            @endif
                             @endforeach
                         </select>
                     </div>
@@ -82,7 +115,7 @@
 
                     <div class="form-group">
                         <label class="form-label" for="name">Image</label>
-                        <input type="file" class="dropify" name="image" required
+                        <input type="file" class="dropify" name="image"
                             data-default-file="{{ isset($product)? asset('images/Product/'.$product->image):asset('admin/assets/images/media/media1.jpg')}}"
                             data-height="180" />
                     </div>
@@ -93,7 +126,18 @@
                             <option disabled selected value="">-- Select --</option>
                             @endempty
                             @foreach ($units as $unit)
-                            <option value="{{  $unit->id }}">{{ $unit->name  }}</option>
+                            @if(isset($product))
+                                @if($product->unit_id == $unit->id)
+                                    <option value="{{  $unit->id }}" selected>{{ $unit->name }} </option>
+                                @else
+                                    <option value="{{  $unit->id }}">{{ $unit->name }} </option>
+                                @endif
+                                
+                            
+                            @else
+                            <option value="{{  $unit->id }}">{{ $unit->name }} </option>
+
+                            @endif
                             @endforeach
                         </select>
                     </div>
@@ -112,12 +156,8 @@
 
                     <div class="form-group">
                         <label class="form-label" for="name_en">Required Minimum Quantity</label>
-                        <select name="min_req_qty" id="min_req_qty" class="form-control" required>
-                            @empty($product)
-                            <option disabled selected value="">-- Select --</option>
-                            @else
-                            <option  selected value="{{$product->req_min_qty}}">{{$product->req_min_qty}}</option>
-                            @endempty
+                        <select name="min_req_qty" id="min_req_qty" class="form-control">
+                            
                             <option value="1">Active</option>
                             <option value="0">In-Active</option>
 

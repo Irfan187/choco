@@ -18,15 +18,11 @@
                     @method('PUT')
                     @endisset
                     <div class="form-group">
-                        <label class="form-label" for="name">First Name </label>
+                        <label class="form-label" for="name">Name </label>
                         <input type="text" class="form-control" name="first_name" id="name" required
                             value="{{ isset($supplier)?$supplier->first_name:''}}" placeholder=" Enter First Name">
                     </div>
-                    <div class="form-group">
-                        <label class="form-label" for="name">Last Name </label>
-                        <input type="text" class="form-control" name="last_name" id="name" required
-                            value="{{ isset($supplier)?$supplier->last_name:''}}" placeholder=" Enter Last Name">
-                    </div>
+                    
                      <div class="form-group">
                         <label class="form-label" for="name">Email </label>
                         <input type="email" class="form-control" name="email" id="name" required

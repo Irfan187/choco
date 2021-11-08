@@ -29,7 +29,12 @@ class UnitController extends Controller
     {
         $units = $this->crud_repository->getAllData($this->model);
         $view = $this->view;
-        return view('mycomponent.datatable', compact('units', 'view'));
+        $un_arr = [];
+        $products = Product::all();
+        foreach($products as $p){
+            array_push($un_arr,$p->unit_id);
+        }
+        return view('mycomponent.datatable', compact('units', 'view','un_arr'));
     }
 
 
