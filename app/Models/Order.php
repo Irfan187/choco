@@ -13,7 +13,7 @@ class Order extends Model
     //     'product_id',
     //     'min_qty',
     //     'req_qty',
-    //     'total', 
+    //     'total',
     //     'grandtotal',
     //     'sel_qty',
     //     'status'

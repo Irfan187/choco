@@ -14,15 +14,12 @@ use App\Models\Order;
 
 class CartController extends Controller
 {
-    public function addToCart(Request $request){
-
-        // dd($request->all());
+    public function addToCart(Request $request)
+    {
         $prod = Product::find($request->p_id);
         $unit = Unit::find($prod->unit_id);
         $sup = User::role('Supplier')->find($request->s_id);
-
-        if($request->checked == 1){
-            
+        if ($request->checked == 1) {
             $data = [
                 'cust_id' => auth()->user()->id,
                 'prod_id' => $prod->id,
@@ -30,163 +27,87 @@ class CartController extends Controller
                 'qty' => $request->qty,
                 'total' => $request->total,
                 'price' => $prod->price,
-    
                 'unit' => $unit->name,
                 'qty1' => $request->qty1,
                 'catid' => $request->catid,
-
             ];
-    
-            // session()->put('all_cart_data',[]);
-            session()->push('all_cart_data'.$prod->id,$data);
-            // dd(session()->get('all_cart_data'.$prod->id));
-        }else{
-            $cartcheck= Cart::where('customer_id', auth()->user()->id)->where('product_id',$prod->id)->first();
-
-            if($cartcheck){
+            session()->push('all_cart_data' . $prod->id, $data);
+            //session()->get('all_cart_data' . $prod->id)->forget();
+            // dd(session()->all());
+        } else {
+            $cartcheck = Cart::where('customer_id', auth()->user()->id)->where('product_id', $prod->id)->first();
+            if ($cartcheck) {
                 $cartcheck->delete();
             }
         }
-        
-        
-        //$data = session()->get('all_cart_data'.$prod->id);
-        
-
-
-       
-
-
-    //     $cart = new Cart();
-    //     $cart->customer_id = auth()->user()->id;
-    //     $cart->product_id = $prod->id;
-    //     $cart->supplier_id = $sup->id;
-    //     $cart->price = $prod->price;
-    //     $cart->qty = $request->qty;
-    //     $cart->total = $request->total;
-    //     $cart->unit = $unit->name;
-    //     $cart->min_qty = $request->qty1;
-
-    //     $cart->save();
-
-    //     $response = [
-    //         'data' => $request->s_id,
-
-    //     ];
-
-    //    return response(json_encode($response));
-
-
-
-
     }
 
 
-    public function addToCartt(Request $request){
-
+    public function addToCartt(Request $request)
+    {
         $products = Product::all();
-
-        foreach($products as $prod){
-               
-                $data = session()->get('all_cart_data'.$prod->id);
-                
-                
-                if($data != null){
-                    // dd($data);
-                    $cart = new Cart();
-                    $cart->customer_id = $data[0]['cust_id'];
-                    $cart->product_id = $data[0]['prod_id'];
-                    $cart->supplier_id = $data[0]['sup_id'];
-                    $cart->price = $data[0]['price'];
-                    $cart->qty = $data[0]['qty'];
-                    $cart->total = $data[0]['total'];
-                    $cart->unit = $data[0]['unit'];
-                    $cart->min_qty = $data[0]['qty1'];
-                    $cart->category_id = $data[0]['catid'];
-
-    
-                    $cart->save();
-                }
-
-                session()->put('all_cart_data'.$prod->id,[]);
-
-                
+        foreach ($products as $prod) {
+            $data = session()->get('all_cart_data' . $prod->id);
+            if ($data != null) {
+                // dd($data);
+                $cart = new Cart();
+                $cart->customer_id = $data[0]['cust_id'];
+                $cart->product_id = $data[0]['prod_id'];
+                $cart->supplier_id = $data[0]['sup_id'];
+                $cart->price = $data[0]['price'];
+                $cart->qty = $data[0]['qty'];
+                $cart->total = $data[0]['total'];
+                $cart->unit = $data[0]['unit'];
+                $cart->min_qty = $data[0]['qty1'];
+                $cart->category_id = $data[0]['catid'];
+                $cart->save();
+            }
+            session()->put('all_cart_data' . $prod->id, []);
         }
-
-       
-    //    dd('dd');
-
-    return redirect('/customer/suppliers');
-
-    
-
-    //     $response = [
-    //         'data' => $request->s_id,
-
-    //     ];
-
-    //    return response(json_encode($response));
-
-
-
-
+        return redirect('/customer/suppliers');
     }
 
 
-    public function confirmOrder(Request $request){
+    public function confirmOrder(Request $request)
+    {
 
-        
+
         $sup = User::role('Supplier')->find($request->id);
 
-        $c = Cart::where('supplier_id',$sup->id)->get();
+        $c = Cart::where('supplier_id', $sup->id)->get();
         $total = 0;
         $qty = [];
         $min_qty = [];
         $product_ids = [];
-        foreach($c as $data){
+        foreach ($c as $data) {
             $total = $total + $data->total;
-           
-            array_push($qty,$data->qty);
-            array_push($min_qty,$data->min_qty);
-
-            array_push($product_ids,$data->product_id);
+            array_push($qty, $data->qty);
+            array_push($min_qty, $data->min_qty);
+            array_push($product_ids, $data->product_id);
         }
-
-
-
-
-
         $order = new Order();
-        $order->order_number = rand(456788,100000000);
+        $order->order_number = rand(456788, 100000000);
         $order->customer_id = auth()->user()->id;
         $order->product_id = json_encode($product_ids);
         $order->supplier_id = $sup->id;
-
         $order->qty = json_encode($qty);
         $order->min_qty = json_encode($min_qty);
-
         $order->total = $total;
-
         $order->save();
-
-        foreach($c as $data){
+        foreach ($c as $data) {
             $data->delete();
         }
-
-
         $response = [
             'data' => $order->order_number
         ];
-
-       return response(json_encode($response));
-
-
-
-
+        return response(json_encode($response));
     }
 
-    public function removeItem($id){
+    public function removeItem($id)
+    {
+
         Cart::find($id)->delete();
 
-        return back()->with('success','Item deleted from cart');
+        return back()->with('success', 'Item deleted from cart');
     }
 }
