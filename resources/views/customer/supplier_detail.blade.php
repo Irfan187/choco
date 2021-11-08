@@ -186,6 +186,7 @@
                                     checked = "1";
                                 }else{
                                     checked = "0";
+                                    alert('Product Deleted from Cart');
                                 }
 
                                 $.ajax({
